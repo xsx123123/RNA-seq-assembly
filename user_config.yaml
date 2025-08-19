@@ -1,0 +1,2 @@
+raw_data_path: '/data/jzhang/project/RNA-seq-assembly/00.raw_data/short-read/raw'
+sample_csv: '/data/jzhang/project/RNA-seq-assembly/workflow/sample.csv'
