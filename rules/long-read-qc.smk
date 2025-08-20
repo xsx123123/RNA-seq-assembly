@@ -5,7 +5,7 @@ rule NanoPlot:
     output:
         report_html = "../01.qc/nanoplot/{long_sample}/NanoPlot-report.html",
     conda:
-        "envs/qc.yaml"
+        "../envs/qc.yaml"
     log:
         "../logs/nanoplot/{long_sample}.nanoplot.log",
     params:

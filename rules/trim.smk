@@ -9,7 +9,7 @@ rule fastp:
         html_report = "../01.qc/trim/{sample}.fastp.html",
         json_report = "../01.qc/trim/{sample}.fastp.json",
     conda:
-        "envs/qc.yaml",
+        "../envs/qc.yaml",
     log:
         "../logs/trim/{sample}.fastp.log",
     message:
@@ -36,7 +36,7 @@ rule multiqc_trim:
     output:
         report_dir = directory("../01.qc/multiqc_trim/")
     conda:
-        "envs/qc.yaml",
+        "../envs/qc.yaml",
     message:
         "Running MultiQC to aggregate FastP reports",
     params:

@@ -10,7 +10,7 @@ rule qc:
         r2_html = "../01.qc/fastqc/{sample}.R2_fastqc.html",
         r2_zip = "../01.qc/fastqc/{sample}.R2_fastqc.zip", 
     conda:
-        "envs/qc.yaml",
+        "../envs/qc.yaml",
     log:
         r1 = "../logs/qc/{sample}.r1.fastqc.log",
         r2 = "../logs/qc/{sample}.r2.fastqc.log",
@@ -34,7 +34,7 @@ rule multiqc:
     output:
         report_dir = directory("../01.qc/multiqc/")
     conda:
-        "envs/qc.yaml",
+        "../envs/qc.yaml",
     message:
         "Running MultiQC to aggregate FastQC reports",
     params:

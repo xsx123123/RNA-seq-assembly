@@ -1,0 +1,26 @@
+[32m2025-08-20 17:56:15[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Loaded samples from /data/jzhang/project/RNA-seq-assembly/workflow/sample.csv
+[32m2025-08-20 17:56:15[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Analyzed 54 short-read samples from the CSV file.
+[32m2025-08-20 17:56:15[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Loaded samples from /data/jzhang/project/RNA-seq-assembly/workflow/long-read-sample.csv
+[32m2025-08-20 17:56:15[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Analyzed 3 long-read samples from the CSV file.
+[32m2025-08-20 17:56:15[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Running FastQC for quality control on raw sequencing data
+[32m2025-08-20 17:56:15[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Run MultiQC to summarize fastqc QC reports
+[32m2025-08-20 17:56:15[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Running Fastp for quality control on raw sequencing data
+[32m2025-08-20 17:56:15[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Run MultiQC to summarize fastp QC reports
+[32m2025-08-20 17:56:15[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Running NanoPlot for quality control on long-read sequencing data
+[32m2025-08-20 17:56:15[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m host: genomics
+[32m2025-08-20 17:56:15[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Building DAG of jobs...
+[32m2025-08-20 17:56:15[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Using shell: /usr/bin/bash
+[32m2025-08-20 17:56:15[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Provided cores: 25
+[32m2025-08-20 17:56:15[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Rules claiming more threads will be scaled down.
+[32m2025-08-20 17:56:15[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Conda environments: ignored
+[32m2025-08-20 17:56:15[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Job stats:
+job             count
+------------  -------
+NanoPlot            3
+all                 1
+fastp              54
+multiqc             1
+multiqc_trim        1
+qc                 54
+total             114
+
