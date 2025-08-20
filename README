@@ -12,5 +12,8 @@ pip3 install loguru
 ## Run
 setup snakemake analysis pipeline by mamba
 ```bash
+# Creating conda environments via mamba
+snakemake --use-conda --conda-create-envs-only --conda-frontend mamba
+# Runing the snakemake pipeline via mamba
 snakemake --cores=25 -p --conda-frontend mamba
 ```

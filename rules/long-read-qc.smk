@@ -5,7 +5,7 @@ rule NanoPlot:
     output:
         report_html = "../01.qc/nanoplot/{long_sample}/NanoPlot-report.html",
     conda:
-        "../envs/qc.yaml"
+        "../envs/Nanoplot.yaml"
     log:
         "../logs/nanoplot/{long_sample}.nanoplot.log",
     params:
@@ -18,7 +18,7 @@ rule NanoPlot:
         config["threads"]["nanoplot"],
     shell:
         """
-        nanoplot -t {threads} \
+        NanoPlot -t {threads} \
                  --N50 \
                  --dpi 800 \
                  --fastq {input.fastq} \
