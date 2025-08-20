@@ -2,19 +2,23 @@
 # *---utf-8---*
 # Date: 2025-8-20
 # Analsis Software
+# ------- software path -------- #
+# When you are usring a conda/mamba analysis environment,
+# this software path parameter is not necessary
 software:
   qc:
     fastqc: "/home/jzhang/software/FastQC/fastqc"
     multiqc: "/home/jzhang/.local/share/mamba/envs/qc/bin/multiqc"
     fastp: "/home/jzhang/software/fastp_1.0.1/fastp"
     nanoplot: '/home/jzhang/.local/share/mamba/envs/qc/bin/NanoPlot'
+# ------- software parameter -------- #
 # Raw data QC & Trimming
 trim:
   length_required: 75
   quality_threshold: 25
-# pipeline resources and parameters
+# Resource parameter for a specific part of the analysis
 threads:
   fastp: 16
   nanoplot: 10
-# pipeline logging levels
+# ------- pipeline parameter -------- #
 log_level: "INFO"
