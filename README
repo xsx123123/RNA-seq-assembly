@@ -1,3 +1,16 @@
 *Author*  : zhang jian
 *Date*    : 2025-8-19
 *Version* : 1.0v
+
+
+```shell
+pip3 install pandas
+pip3 install rich
+pip3 install loguru
+
+```
+## Run
+setup snakemake analysis pipeline by mamba
+```bash
+snakemake --cores=25 -p --conda-frontend mamba
+```

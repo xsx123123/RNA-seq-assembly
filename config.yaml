@@ -1,2 +1,7 @@
+project_name: 'RNA-seq-assembly'
 raw_data_path: '/data/jzhang/project/RNA-seq-assembly/00.raw_data/short-read/raw'
+long_read_raw_data_path: '/data/jzhang/project/RNA-seq-assembly/00.raw_data/long-read/raw'
+# short-read raw data
 sample_csv: '/data/jzhang/project/RNA-seq-assembly/workflow/sample.csv'
+# long-read raw data
+long_read_sample_csv: '/data/jzhang/project/RNA-seq-assembly/workflow/long-read-sample.csv'

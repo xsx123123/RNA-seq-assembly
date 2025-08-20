@@ -1,13 +1,20 @@
 # AUthor: jian zhang
 # *---utf-8---*
-# Date: 2025-8-19
+# Date: 2025-8-20
+# Analsis Software
 software:
   qc:
     fastqc: "/home/jzhang/software/FastQC/fastqc"
     multiqc: "/home/jzhang/.local/share/mamba/envs/qc/bin/multiqc"
     fastp: "/home/jzhang/software/fastp_1.0.1/fastp"
+    nanoplot: '/home/jzhang/.local/share/mamba/envs/qc/bin/NanoPlot'
+# Raw data QC & Trimming
 trim:
   length_required: 75
   quality_threshold: 25
+# pipeline resources and parameters
 threads:
   fastp: 16
+  nanoplot: 10
+# pipeline logging levels
+log_level: "INFO"
