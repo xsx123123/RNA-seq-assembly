@@ -2,18 +2,24 @@
 # *---utf-8---*
 # Date   : 2025-8-19
 # Version: 1.0
-
+# --------- main snakefile --------- #
 configfile: "config/config.yaml"
-configfile: "user_config.yaml"
+configfile: "config.yaml"
 
-include: 'rules/ID_Convert.smk'
+# include all rules from the rules directory
+include: 'rules/log.smk'
+include: 'rules/id_convert.smk'
 include: 'rules/qc.smk'
 include: 'rules/trim.smk'
 
+# Set the default target to run
 rule all:
     input:
-        "../01.qc/multiqc/multiqc_report.html",
+        # Raw data QC and trimming reports
+        directory("../01.qc/multiqc/"),
+        directory("../01.qc/multiqc_trim/"),
         expand("../01.qc/trim/{sample}.R1.fastp.fq.gz", sample=load_samples.keys()),
         expand("../01.qc/trim/{sample}.R2.fastp.fq.gz", sample=load_samples.keys()),
         expand("../01.qc/trim/{sample}.fastp.html", sample=load_samples.keys()),
         expand("../01.qc/trim/{sample}.fastp.json", sample=load_samples.keys()),
+# --------- main snakefile --------- #

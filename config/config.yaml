@@ -3,9 +3,11 @@
 # Date: 2025-8-19
 software:
   qc:
-    fastqc: "/home/jzhang/.local/share/mamba/envs/qc/bin/fastqc"
+    fastqc: "/home/jzhang/software/FastQC/fastqc"
     multiqc: "/home/jzhang/.local/share/mamba/envs/qc/bin/multiqc"
-    fastp: "/home/jzhang/.local/share/mamba/envs/qc/bin/fastp"
+    fastp: "/home/jzhang/software/fastp_1.0.1/fastp"
 trim:
   length_required: 75
   quality_threshold: 25
+threads:
+  fastp: 16

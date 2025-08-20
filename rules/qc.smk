@@ -1,3 +1,5 @@
+logger.info('Running FastQC for quality control on raw sequencing data')
+
 rule qc:
     input:
         r1 = os.path.join(config["raw_data_path"], "{sample}.R1.fq.gz"),
@@ -18,23 +20,29 @@ rule qc:
     threads: 1
     shell:
         """
-        {params.fastqc} {input.r1} -o {params.out_dir} --threads {threads} > {log.r1} 2>&1
+        {params.fastqc} {input.r1} -o {params.out_dir} --threads {threads} > {log.r1} 2>&1 &&
         {params.fastqc} {input.r2} -o {params.out_dir} --threads {threads} > {log.r2} 2>&1
         """
 
+logger.info('Run MultiQC to summarize fastqc QC reports')
 rule multiqc:
     input:
-        fastqc_reports = expand("../01.qc/fastqc/{sample}.R1_fastqc.zip", sample=load_samples.keys()) + \
-                         expand("../01.qc/fastqc/{sample}.R2_fastqc.zip", sample=load_samples.keys())
+        fastqc_files_r1 = expand("../01.qc/fastqc/{sample}.R1_fastqc.zip", sample=load_samples.keys()),
+        fastqc_files_r2 = expand("../01.qc/fastqc/{sample}.R2_fastqc.zip", sample=load_samples.keys()),
     output:
-        report = "../01.qc/multiqc/multiqc_report.html",
+        report_dir = directory("../01.qc/multiqc/")
     message:
         "Running MultiQC to aggregate FastQC reports",
     params:
-        out_dir = "../01.qc/multiqc",
+        fastqc_reports = "../01.qc/fastqc/",
+        report = "multiqc_trim_report.html",
+        multiqc = config["software"]["qc"]["multiqc"],
+        title = "raw-data-multiqc-report",
     log:
-        "../logs/multiqc.log",
+        "../logs/qc/multiqc.log",
     shell:
         """
-        multiqc {input.fastqc_reports} -o {params.out_dir} -n multiqc_report.html > {log} 2>&1
+        {params.multiqc} {params.fastqc_reports} --outdir {output.report_dir} \
+                         -i {params.title} \
+                         -n {params.report} > {log} 2>&1
         """
