@@ -23,6 +23,9 @@ rule all:
         expand("../01.qc/trim/{sample}.R2.fastp.fq.gz", sample=load_samples.keys()),
         expand("../01.qc/trim/{sample}.fastp.html", sample=load_samples.keys()),
         expand("../01.qc/trim/{sample}.fastp.json", sample=load_samples.keys()),
-        # Long-Read raw data QC and trimming reports
-        expand("../01.qc/nanoplot/{long_sample}/NanoPlot-report.html", long_sample=long_read_samples.keys()),
+        # Long-Read raw data QC and trißmming reports
+        expand("../01.qc/nanoplot/{long_sample}/NanoPlot-report.html",long_sample=long_read_samples.keys()),
+        expand("../01.qc/long_read_trim/{long_sample}.fastplong.fq.gz",long_sample=long_read_samples.keys()),
+        expand("../01.qc/long_read_trim/{long_sample}.fastplong.html",long_sample=long_read_samples.keys()),
+        expand("../01.qc/long_read_trim/{long_sample}.fastplong.json",long_sample=long_read_samples.keys()),
 # --------- main snakefile --------- #

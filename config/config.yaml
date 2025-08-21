@@ -16,9 +16,13 @@ software:
 trim:
   length_required: 75
   quality_threshold: 25
+long_read_qc:
+  length_required: 300
+  qualified_quality_phred: 15
 # Resource parameter for a specific part of the analysis
 threads:
   fastp: 16
   nanoplot: 10
+  fastplong: 10
 # ------- pipeline parameter -------- #
 log_level: "INFO"
