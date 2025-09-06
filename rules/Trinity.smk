@@ -1,6 +1,25 @@
+rule merge_long_read:
+    input:
+        fastq = os.path.join(config["long_read_raw_data_path"], "{long_sample}.fq.gz"),
+    output:
+        merged_fastq = "../01.qc/long_read_trim/{long_sample}.merged.fq.gz",
+    conda:
+        "../envs/merge_long_read.yaml",
+    log:
+        "../logs/long_read_trim/{long_sample}.merge_long_read.log",
+    params:
+        merge_tool = config["software"]["qc"]["merge_long_read"],
+    message:
+        "Merging long-read data for {wildcards.long_sample}",
+    threads: 
+        config["threads"]["merge_long_read"],
+    shell:
+        """
+        {params.merge_tool} -i {input.fastq} -o {output.merged_fastq} > {log} 2>&1
+        """
+
+
 logger.info('Running Trinity for de novo transcriptome assembly')
-
-
 
 rule Trinity:
     input:

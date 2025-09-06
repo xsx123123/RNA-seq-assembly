@@ -15,5 +15,5 @@ setup snakemake analysis pipeline by mamba
 # Creating conda environments via mamba
 snakemake --use-conda --conda-create-envs-only --conda-frontend mamba
 # Runing the snakemake pipeline via mamba
-snakemake --cores=25 -p --conda-frontend mamba
+snakemake --cores=25 -p --conda-frontend mamba --use-conda
 ```
