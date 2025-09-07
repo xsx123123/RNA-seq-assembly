@@ -38,11 +38,11 @@ threads:
   corset_cluster: 1
   salmon_index: 20
   salmon_quant: 10
+  busco_salmon: 20
 # ------- pipeline parameter -------- #
 log_level: "INFO"
-
 busco:
-  lineage: "embryophyta_odb10"
+  lineage: "/data/jzhang/reference/busco/lineages/embryophyta_odb10"
   mode: "transcriptome"
 cdhit:
   coverage: 0.95

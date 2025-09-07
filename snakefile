@@ -41,4 +41,8 @@ rule all:
         # expand("../03.bowtie/{sample}/{sample}.bam",sample=load_samples.keys()),
         # expand("../04.expression/{sample}.corset-reads",sample=load_samples.keys()),
         expand("../04.mapping/salmon_quant/{sample}/",sample=load_samples.keys()),
+        "../04.mapping/all_samples.TPM.matrix",
+        "../04.mapping/E90_transcript_ids.txt",
+        "../04.mapping/rnabloom.transcripts.filtered.dedup_E90_transcript.fa",
+        "../04.mapping/E90_transcript_busco/",
 # --------- main snakefile --------- #
