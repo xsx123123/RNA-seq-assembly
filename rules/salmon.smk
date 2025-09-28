@@ -20,7 +20,7 @@ rule salmon_mapping:
     input:
         r1 = "../01.qc/trim/{sample}.R1.fastp.fq.gz",
         r2 = "../01.qc/trim/{sample}.R2.fastp.fq.gz", 
-        salmon_dir = directory("../04.mapping/salmon_index/transcripts_index"),
+        salmon_dir = "../04.mapping/salmon_index/transcripts_index",
     output:
         quant = directory("../04.mapping/salmon_quant/{sample}/"),
     conda:

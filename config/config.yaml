@@ -39,6 +39,7 @@ threads:
   salmon_index: 20
   salmon_quant: 10
   busco_salmon: 20
+  transrate: 35
 # ------- pipeline parameter -------- #
 log_level: "INFO"
 busco:
