@@ -28,7 +28,7 @@ rule STAR_mapping:
                            --outSAMtype BAM SortedByCoordinate \
                            --outSAMunmapped None \
                            --twopassMode Basic \
-                           --limitBAMsortRAM 60000000000 > {log} 2>&1
+                           --limitBAMsortRAM 60000000000 &> {log}
           """
 
 logger.info('Running samtools to sort and index BAM files')
@@ -50,8 +50,8 @@ rule index_bam:
           config["threads"]["samtools_sort"],
      shell:
           """
-          samtools sort -@ {threads} {input.bam} -o {output.sort} > {log.sort} 2>&1 
-          samtools index -@ {threads} {output.sort} -o {output.bai} > {log.bai} 2>&1 
+          samtools sort -@ {threads} {input.bam} -o {output.sort} &> {log.sort}
+          samtools index -@ {threads} {output.sort} -o {output.bai} &> {log.bai}
           """
 
 logger.info('Running multiqc to summarize STAR mapping logs')
@@ -77,5 +77,5 @@ rule multiqc_star:
           multiqc {params.star_dir} \
                   --outdir {output.report_dir} \
                   -i {params.title} \
-                  -n {params.report} > {log} 2>&1
+                  -n {params.report} &> {log}
           """

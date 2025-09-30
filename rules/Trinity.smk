@@ -15,7 +15,7 @@ rule merge_long_read:
         config["threads"]["merge_long_read"],
     shell:
         """
-        {params.merge_tool} -i {input.fastq} -o {output.merged_fastq} > {log} 2>&1
+        {params.merge_tool} -i {input.fastq} -o {output.merged_fastq} &> {log}
         """
 
 
@@ -50,5 +50,5 @@ rule Trinity:
                          --min_kmer_cov {params.min_kmer_cov} \
                          --output {output.trinity_fasta} \
                          --CPU {threads} \
-                         --log {output.trinity_log} > {log} 2>&1
+                         --log {output.trinity_log} &> {log}
         """ 

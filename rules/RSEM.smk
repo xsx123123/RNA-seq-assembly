@@ -24,5 +24,5 @@ rule rsem_quant:
             --estimate-rspd \
             {input.r1} {input.r2} \
             {params.ref_prefix} \
-            {params.out_prefix} > {log} 2>&1
+            {params.out_prefix} &> {log}
         """

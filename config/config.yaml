@@ -5,13 +5,14 @@
 # ------- software path -------- #
 # When you are usring a conda/mamba analysis environment,
 # this software path parameter is not necessary
-software:
-  corset: /home/jzhang/software/corset-1.09-linux64/corset
-  qc:
-    fastqc: "/home/jzhang/software/FastQC/fastqc"
-    multiqc: "/home/jzhang/.local/share/mamba/envs/qc/bin/multiqc"
-    fastp: "/home/jzhang/software/fastp_1.0.1/fastp"
-    nanoplot: '/home/jzhang/.local/share/mamba/envs/qc/bin/NanoPlot'
+# software:
+#  corset: /home/jzhang/software/corset-1.09-linux64/corset
+#  qc:
+#    fastqc: "/home/jzhang/software/FastQC/fastqc"
+#    multiqc: "/home/jzhang/.local/share/mamba/envs/qc/bin/multiqc"
+#    fastp: "/home/jzhang/software/fastp_1.0.1/fastp"
+#    nanoplot: '/home/jzhang/.local/share/mamba/envs/qc/bin/NanoPlot'
+#  transrate: '/home/jzhang/.local/share/mamba/envs/transrate/bin/transrate'
 # ------- software parameter -------- #
 # Raw data QC & Trimming
 trim:
@@ -20,11 +21,8 @@ trim:
 long_read_qc:
   length_required: 300
   qualified_quality_phred: 15
-
-star_index: '/data/jzhang/reference/Bidens_alba_v1/STAR_Bidens_alba_v1'
-bowtie_index: '/data/jzhang/project/RNA-seq-assembly/02.salmon/rnabloom/bowtie_index'
-rsem_bowtie2_index: '/data/jzhang/project/RNA-seq-assembly/mmseq2/mmseqs/prot90/clu_rep/rsem_bowtie2_index/index'
-reference: '/data/jzhang/project/RNA-seq-assembly/mmseq2/mmseqs/prot90/clu_rep/clu_rep.fasta'
+rnabloom:
+  min_length: 150
 # Resource parameter for a specific part of the analysis
 threads:
   fastp: 16
@@ -33,6 +31,7 @@ threads:
   star_mapping : 16
   samtools_sort: 8
   rnabloom: 30
+  busco: 16
   bowtie_mapping: 10
   samtools_mapping: 5
   corset_cluster: 1
@@ -49,3 +48,6 @@ cdhit:
   coverage: 0.95
 salmon:
   librarytype: "A"
+
+abundance_estimates:
+  est_method: salmon

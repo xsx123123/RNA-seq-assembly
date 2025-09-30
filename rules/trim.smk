@@ -26,7 +26,7 @@ rule fastp:
               -o {output.r1_trimmed} -O {output.r2_trimmed} \
               --thread {threads} --length_required  {params.length_required} \
               --qualified_quality_phred {params.quality_threshold} -g -V \
-              -h {output.html_report}  -j {output.json_report} > {log} 2>&1
+              -h {output.html_report}  -j {output.json_report} &> {log}
         """
 
 logger.info('Run MultiQC to summarize fastp QC reports')
@@ -50,5 +50,5 @@ rule multiqc_trim:
         """
         multiqc {params.fastqc_reports} --outdir {output.report_dir} \
                 -i {params.title} \
-                -n {params.report} > {log} 2>&1
+                -n {params.report} &> {log}
         """

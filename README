@@ -1,6 +1,6 @@
 *Author*  : zhang jian
-*Date*    : 2025-8-19
-*Version* : 1.0v
+*Date*    : 2025-9-29
+*Version* : 1.1v
 
 
 ```shell
@@ -12,6 +12,8 @@ pip3 install loguru
 ## Run
 setup snakemake analysis pipeline by mamba
 ```bash
+# fix conda channel_priority -> flexible
+conda config --set channel_priority flexible
 # Creating conda environments via mamba
 snakemake --use-conda --conda-create-envs-only --conda-frontend mamba
 # Clean install conda/mamba envs
