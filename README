@@ -19,5 +19,5 @@ snakemake --use-conda --conda-create-envs-only --conda-frontend mamba
 # Clean install conda/mamba envs
 snakemake --use-conda --conda-cleanup-envs
 # Runing the snakemake pipeline via mamba
-snakemake --cores=50 -p --conda-frontend mamba --use-conda
+snakemake --cores=30 -p --conda-frontend mamba --use-conda
 ```

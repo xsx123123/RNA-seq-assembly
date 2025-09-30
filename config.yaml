@@ -1,8 +1,10 @@
 project_name: 'RNA-seq-assembly'
+# short & long read raw-data
 raw_data_path: '/data/jzhang/project/RNA-seq-assembly_2025.8.25/00.raw_data/short-read/raw'
-long_read: true
 long_read_raw_data_path: '/data/jzhang/project/RNA-seq-assembly_2025.8.25/00.raw_data/long-read/raw'
-# short-read raw data
+# short & long read samples info
 sample_csv: '/data/jzhang/project/RNA-seq-assembly_2025.8.25/workflow/sample.csv'
-# long-read raw data
 long_read_sample_csv: '/data/jzhang/project/RNA-seq-assembly_2025.8.25/workflow/long-read-sample.csv'
+# other parameter
+long_read: true
+print_target: true

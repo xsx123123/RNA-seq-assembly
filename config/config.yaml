@@ -18,6 +18,7 @@
 trim:
   length_required: 75
   quality_threshold: 25
+  adapter_fasta: "./data/Illumina_Universal_Adapter.fa"
 long_read_qc:
   length_required: 300
   qualified_quality_phred: 15
@@ -25,7 +26,7 @@ rnabloom:
   min_length: 150
 # Resource parameter for a specific part of the analysis
 threads:
-  fastp: 16
+  fastp: 6
   nanoplot: 10
   fastplong: 10
   star_mapping : 16
@@ -39,6 +40,8 @@ threads:
   salmon_quant: 10
   busco_salmon: 20
   transrate: 35
+  TD2.LongOrfs: 20
+  mmseqs: 20
 # ------- pipeline parameter -------- #
 log_level: "INFO"
 busco:
@@ -51,3 +54,7 @@ salmon:
 
 abundance_estimates:
   est_method: salmon
+mmseqs:
+  swissprot_database: /data/jzhang/reference/mmseqs/UniProtKB/swissprot
+annotate:
+  uniport_database: /data/jzhang/reference/uniport/swissprot_annotations.tsv

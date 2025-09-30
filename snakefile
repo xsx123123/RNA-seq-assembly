@@ -10,13 +10,16 @@ configfile: "config/config.yaml"
 configfile: "config.yaml"
 # --------- snakemake rule --------- #
 # include all rules from the rules directory
-include: 'rules/target.smk'
+include: 'rules/common.smk'
 include: 'rules/log.smk'
 include: 'rules/id_convert.smk'
 include: 'rules/short_read_qc.smk'
+include: 'rules/short_read_clean.smk'
 include: 'rules/long-read-qc_clean.smk'
 include: 'rules/rnabloom_qc.smk'
-include: 'rules/salmon_E90.smk'
+include: 'rules/E90_filtered.smk'
+include: 'rules/E90_transcript_Evaluate.smk'
+include: 'rules/transcript2cds.smk'
 # --------- target rule --------- #
 rule all:
     input:

@@ -1,0 +1,29 @@
+[32m2025-09-30 10:58:22[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Loaded samples from /data/jzhang/project/RNA-seq-assembly_2025.8.25/workflow/sample.csv
+[32m2025-09-30 10:58:22[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Analyzed 54 short-read samples from the CSV file.
+[32m2025-09-30 10:58:22[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Loaded samples from /data/jzhang/project/RNA-seq-assembly_2025.8.25/workflow/long-read-sample.csv
+[32m2025-09-30 10:58:22[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Analyzed 3 long-read samples from the CSV file.
+[32m2025-09-30 10:58:22[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m host: genomics
+[32m2025-09-30 10:58:22[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Building DAG of jobs...
+[32m2025-09-30 10:58:24[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Using shell: /usr/bin/bash
+[32m2025-09-30 10:58:24[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Provided cores: 30
+[32m2025-09-30 10:58:24[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Rules claiming more threads will be scaled down.
+[32m2025-09-30 10:58:24[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Job stats:
+job                            count
+---------------------------  -------
+E90_Extert_core_transcripts        1
+E90_aggregate_quants               1
+E90_core_transcripts               1
+E90_salmon_index                   1
+E90_salmon_mapping                54
+all                                1
+busco_assessment                   1
+multiqc_trim                       1
+rnabloom_long                      1
+salmon_index                       1
+salmon_mapping                    54
+short_read_fastp                  54
+transcripts_cluster                1
+transcripts_cluter_qc_busco        1
+transcripts_filter                 1
+total                            174
+
