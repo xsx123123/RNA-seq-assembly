@@ -21,8 +21,8 @@ rule E90_salmon_index:
 
 rule E90_salmon_mapping:
     input:
-        r1 = "../01.qc/trim/{sample}.R1.fastp.fq.gz",
-        r2 = "../01.qc/trim/{sample}.R2.fastp.fq.gz", 
+        r1 = "../01.qc/short_read_trim/{sample}.R1.fastp.fq.gz",
+        r2 = "../01.qc/short_read_trim/{sample}.R2.fastp.fq.gz", 
         salmon_dir = "../04.E90_transcript_Evaluate/salmon_index/transcripts_index",
     output:
         quant = "../04.E90_transcript_Evaluate/salmon_quant/{sample}/quant.sf",
@@ -73,7 +73,7 @@ rule E90_ExN50_filtered_length_dedup:
         transrate_salmon = '../04.E90_transcript_Evaluate/abundance_estimates_to_matrix/salmon_quant.isoform.counts.matrix',
         transcript = "../03.E90_filter/rnabloom.transcripts.length_filtered.dedup_E90_transcript.fa",
     output:
-        ExN50_result = "../03.E90_filter/ExN50_filtered/ExN50.transcript.stats",
+        ExN50_result = "../04.E90_transcript_Evaluate/ExN50_filtered/ExN50.transcript.stats",
     conda:
         "../envs/Trinity.yaml",
     log:

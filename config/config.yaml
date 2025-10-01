@@ -5,7 +5,9 @@
 # ------- software path -------- #
 # When you are usring a conda/mamba analysis environment,
 # this software path parameter is not necessary
-# software:
+software:
+  signalp: 
+  interproscan:  /data/jzhang/reference/InterProScan/interproscan-5.75-106.0/interproscan.sh
 #  corset: /home/jzhang/software/corset-1.09-linux64/corset
 #  qc:
 #    fastqc: "/home/jzhang/software/FastQC/fastqc"
@@ -42,6 +44,8 @@ threads:
   transrate: 35
   TD2.LongOrfs: 20
   mmseqs: 20
+  hmmscan: 20
+  interproscan: 20
 # ------- pipeline parameter -------- #
 log_level: "INFO"
 busco:
@@ -58,3 +62,4 @@ mmseqs:
   swissprot_database: /data/jzhang/reference/mmseqs/UniProtKB/swissprot
 annotate:
   uniport_database: /data/jzhang/reference/uniport/swissprot_annotations.tsv
+  Pfam_A: /data/jzhang/reference/Pfam/Pfam-A.hmm

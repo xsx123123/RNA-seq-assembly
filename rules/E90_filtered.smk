@@ -21,8 +21,8 @@ rule salmon_index:
 
 rule salmon_mapping:
     input:
-        r1 = "../01.qc/trim/{sample}.R1.fastp.fq.gz",
-        r2 = "../01.qc/trim/{sample}.R2.fastp.fq.gz", 
+        r1 = "../01.qc/short_read_trim/{sample}.R1.fastp.fq.gz",
+        r2 = "../01.qc/short_read_trim/{sample}.R2.fastp.fq.gz", 
         salmon_dir = "../03.E90_filter/salmon_index/transcripts_index",
     output:
         quant = "../03.E90_filter/salmon_quant/{sample}/quant.sf",

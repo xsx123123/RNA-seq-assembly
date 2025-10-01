@@ -2,32 +2,32 @@
 # -*- coding: utf-8 -*-
 import os
 # ----- rule ----- #
-rule rnabloom_long:
-    input:
-        long_reads = expand("../01.qc/long_read_trim/{sample}.fastplong.fq.gz",
-                            sample=long_read_samples.keys()),
-        short_r1 = expand("../01.qc/trim/{sample}.R1.fastp.fq.gz",
-                            sample=load_samples.keys()),
-        short_r2 = expand("../01.qc/trim/{sample}.R2.fastp.fq.gz",
-                            sample=load_samples.keys()),
-    output:
-        bloom = "../02.assembly/rnabloom_assembly/rnabloom.transcripts.fa",
-    conda:
-        "../envs/rnabloom.yaml",
-    log:
-        "../logs/rnabloom/rnabloom_long.log",
-    params:
-        outdir="../02.assembly/rnabloom_assembly",
-    threads:
-        config["threads"]["rnabloom"],
-    shell:
-        """
-        rnabloom -long {input.long_reads} \
-                 -t {threads} \
-                 -outdir {params.outdir} \
-                 -sef {input.short_r1} \
-                 -sef {input.short_r2} &> {log}
-        """
+#rule rnabloom_long:
+#    input:
+#        long_reads = expand("../01.qc/long_read_trim/{sample}.fastplong.fq.gz",
+#                            sample=long_read_samples.keys()),
+#        short_r1 = expand("../01.qc/short_read_trim/{sample}.R1.fastp.fq.gz",
+#                            sample=load_samples.keys()),
+#        short_r2 = expand("../01.qc/short_read_trim/{sample}.R2.fastp.fq.gz",
+#                            sample=load_samples.keys()),
+#    output:
+#        bloom = "../02.assembly/rnabloom_assembly/rnabloom.transcripts.fa",
+#    conda:
+#        "../envs/rnabloom.yaml",
+#    log:
+#        "../logs/rnabloom/rnabloom_long.log",
+#    params:
+#        outdir="../02.assembly/rnabloom_assembly",
+#    threads:
+#        config["threads"]["rnabloom"],
+#    shell:
+#        """
+#        rnabloom -long {input.long_reads} \
+#                 -t {threads} \
+#                 -outdir {params.outdir} \
+#                 -sef {input.short_r1} \
+#                 -sef {input.short_r2} &> {log}
+#        """
 
 rule transcripts_filter:
     input:

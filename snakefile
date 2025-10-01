@@ -19,7 +19,10 @@ include: 'rules/long-read-qc_clean.smk'
 include: 'rules/rnabloom_qc.smk'
 include: 'rules/E90_filtered.smk'
 include: 'rules/E90_transcript_Evaluate.smk'
+include: 'rules/assembly_qc.smk'
 include: 'rules/transcript2cds.smk'
+include: 'rules/annotation_by_Diamond.smk'
+include: 'rules/annotation_HMMER.smk'
 # --------- target rule --------- #
 rule all:
     input:

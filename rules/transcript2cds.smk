@@ -52,7 +52,6 @@ rule pep_search_by_mmseqs:
 
 rule TD2Predict_Integrating_homology:
     input:
-        TD2_LongOrfs_dir = "../05.transcript_annotation/rnabloom.transcripts.length_filtered.dedup_E90_transcript.fa",
         mmseqs_result = "../05.transcript_annotation/rnabloom.transcripts.length_filtered.dedup_E90_transcript/longest_orfs_alnRes.m8",
     output:
         pep = '../05.transcript_annotation/rnabloom.transcripts.length_filtered.dedup_E90_transcript.fa.TD2.pep',
@@ -65,9 +64,11 @@ rule TD2Predict_Integrating_homology:
         "../logs/transcript2cds/transcript2cds.log",
     threads:
         config["threads"]["TD2.LongOrfs"],
+    params:
+        TD2_LongOrfs_dir = "../05.transcript_annotation/rnabloom.transcripts.length_filtered.dedup_E90_transcript.fa",
     shell:
         """
-        TD2.Predict -t {input.TD2_LongOrfs_dir} \
+        TD2.Predict -t {params.TD2_LongOrfs_dir} \
                     --retain-mmseqs-hits {input.mmseqs_result} &> {log}
         """
 # ----- rule ----- #

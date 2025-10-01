@@ -3,8 +3,10 @@
 # ----- rule ----- #
 rule Trinity:
     input:
-        r1 = os.path.join(config["raw_data_path"], "{sample}.R1.fq.gz"),
-        r2 = os.path.join(config["raw_data_path"], "{sample}.R2.fq.gz"),
+        short_r1 = expand("../01.qc/short_read_trim/{sample}.R1.fastp.fq.gz",
+                            sample=load_samples.keys()),
+        short_r2 = expand("../01.qc/short_read_trim/{sample}.R2.fastp.fq.gz",
+                            sample=load_samples.keys()),
     output:
         trinity_fasta = "../02.trinity/{sample}.Trinity.fasta",
         trinity_transcripts = "../02.trinity/{sample}.Trinity.transcripts.fasta",
@@ -23,8 +25,8 @@ rule Trinity:
     shell:
         """
         trinity --seqType fq \
-                --left {input.r1} \
-                --right {input.r2} \
+                --left {input.short_r1} \
+                --right {input.short_r2} \
                 --max_memory {params.max_memory} \
                 --min_kmer_cov {params.min_kmer_cov} \
                 --output {output.trinity_fasta} \
