@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # *---utf-8---*
-# Version: 1.0v
+# Version: 0.1.2v
 # Author : jzhang
 # ------- snakemake version check ------- #
 from snakemake.utils import min_version
@@ -23,6 +23,7 @@ include: 'rules/assembly_qc.smk'
 include: 'rules/transcript2cds.smk'
 include: 'rules/annotation_by_Diamond.smk'
 include: 'rules/annotation_HMMER.smk'
+include: 'rules/RNA-seq-assembly-DEG.smk'
 # --------- target rule --------- #
 rule all:
     input:

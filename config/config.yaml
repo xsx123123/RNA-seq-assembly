@@ -64,3 +64,6 @@ mmseqs:
 annotate:
   uniport_database: /data/jzhang/reference/uniport/swissprot_annotations.tsv
   Pfam_A: /data/jzhang/reference/Pfam/Pfam-A.hmm
+deg:
+  pval: 0.05
+  lfc: 1
