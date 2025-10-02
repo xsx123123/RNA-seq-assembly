@@ -1,7 +1,0 @@
-[32m2025-09-28 16:34:00[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Loaded samples from /data/jzhang/project/RNA-seq-assembly_2025.8.25/workflow/sample.csv
-[32m2025-09-28 16:34:00[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Analyzed 54 short-read samples from the CSV file.
-[32m2025-09-28 16:34:00[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Loaded samples from /data/jzhang/project/RNA-seq-assembly_2025.8.25/workflow/long-read-sample.csv
-[32m2025-09-28 16:34:00[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Analyzed 3 long-read samples from the CSV file.
-[32m2025-09-28 16:34:00[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m host: genomics
-[32m2025-09-28 16:34:00[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Building DAG of jobs...
-[32m2025-09-28 16:34:00[0m [34m LOG-LEVELS: [0mℹ️ [34m LOG-INFO : [0m Nothing to be done (all requested files are present and up to date).
