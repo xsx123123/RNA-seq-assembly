@@ -1,6 +1,6 @@
-*Author*  : jzhang \n
-*Email*   : zhangjian199567@outlook.com \n
-*Date*    : 2025-10-2 \n
+*Author*  : jzhang  
+*Email*   : zhangjian199567@outlook.com  
+*Date*    : 2025-10-2  
 *Version* : 0.1.2v
 ## Introduce
 ### `RNA-seq-assembly`
