@@ -1,7 +1,7 @@
 #!/usr/bin/snakemake
 # -*- coding: utf-8 -*-
 # ----- rule ----- #
-rule salmon_index:
+rule E90_filtered_salmon_index:
     input:
         filtered = "../02.assembly/rnabloom_assembly/rnabloom.transcripts.length_filtered.dedup.fa",
     output:
@@ -9,7 +9,7 @@ rule salmon_index:
     conda:
         "../envs/salmon.yaml",
     log:
-        "../logs/salmon/salmon_index.log",
+        "../logs/salmon/E90_filtered_salmon_index.log",
     threads:
         config["threads"]["salmon_index"],
     shell:

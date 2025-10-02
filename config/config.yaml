@@ -46,6 +46,7 @@ threads:
   mmseqs: 20
   hmmscan: 20
   interproscan: 20
+  preprocess_interpro: 20
 # ------- pipeline parameter -------- #
 log_level: "INFO"
 busco:

@@ -42,8 +42,7 @@ rule transcripts_filter:
         "../logs/rnabloom/transcripts_filter.log",
     shell:
         """
-        seqtk seq -L {params.min_length} \
-                  -A {input.bloom} > {output.filtered} &> {log}
+        seqtk seq -L {params.min_length} -A {input.bloom} > {output.filtered} 2> {log}
         """
 
 rule transcripts_qc_busco:

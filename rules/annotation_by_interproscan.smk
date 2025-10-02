@@ -23,4 +23,25 @@ rule interproscan:
                               --goterms \
                               &> {log}
         """
+
+rule interproscan_format:
+    input:
+        ann = '../05.transcript_annotation/TD2_pep_interproscan_annotation/rnabloom.transcripts.filtered.dedup_E90_transcript.fa.TD2.cleaned.pep.tsv',
+    output:
+        summary = "../05.transcript_annotation/TD2_pep_interproscan_annotation/interproscan_ann.summary",
+        go = "../05.transcript_annotation/TD2_pep_interproscan_annotation/interproscan_ann.gopathway",
+    conda:
+        "../envs/python3.yaml",
+    log:
+        "../logs/transcript_annotation/preprocess_interpro.log",
+    threads:
+        config['threads']['preprocess_interpro'],
+    shell:
+        """
+        python3 ./scripts/preprocess_interpro.py \
+                --summary_out {output.summary} \
+                --go_map_out  {output.go} \
+                {input.ann} \
+                --cores {threads} &> {log}
+        """
 # ----- rule ----- #
