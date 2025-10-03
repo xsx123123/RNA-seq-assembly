@@ -130,7 +130,7 @@ rule E90_Extert_core_transcripts:
     shell:
         """
         seqtk subseq {input.filtered} \
-                     {input.E90_transcript} > {output.transcript} &> {log}
+                     {input.E90_transcript} > {output.transcript} 2> {log}
         """
 
 rule busco_assessment:
