@@ -3,7 +3,7 @@
 # ----- rule ----- #
 rule Diamond_blast:
     input:
-        pep = '../05.transcript_annotation/rnabloom.transcripts.length_filtered.dedup_E90_transcript.fa.TD2.pep',
+        pep = '../05.transcript_annotation/rnabloom_transcript.fa.TD2.pep',
     output:
         matches = '../05.transcript_annotation/TD2_pep_matches.tsv',
     conda:

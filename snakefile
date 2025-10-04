@@ -23,6 +23,7 @@ include: 'rules/assembly_qc.smk'
 include: 'rules/transcript2cds.smk'
 include: 'rules/annotation_by_Diamond.smk'
 include: 'rules/annotation_HMMER.smk'
+include: 'rules/annotation_by_interproscan.smk'
 include: 'rules/RNA-seq-assembly-DEG.smk'
 # --------- target rule --------- #
 rule all:

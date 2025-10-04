@@ -54,10 +54,10 @@ rule TD2Predict_Integrating_homology:
     input:
         mmseqs_result = "../05.transcript_annotation/rnabloom.transcripts.length_filtered.dedup_E90_transcript/longest_orfs_alnRes.m8",
     output:
-        pep = '../05.transcript_annotation/rnabloom.transcripts.length_filtered.dedup_E90_transcript.fa.TD2.pep',
-        cds = '../05.transcript_annotation/rnabloom.transcripts.length_filtered.dedup_E90_transcript.fa.TD2.cds',
-        gff3 = '../05.transcript_annotation/rnabloom.transcripts.length_filtered.dedup_E90_transcript.fa.TD2.gff3',
-        bed = '../05.transcript_annotation/rnabloom.transcripts.length_filtered.dedup_E90_transcript.fa.TD2.bed',
+        pep = '../05.transcript_annotation/rnabloom_transcript.fa.TD2.pep',
+        cds = '../05.transcript_annotation/rnabloom_transcript.fa.TD2.cds',
+        gff3 = '../05.transcript_annotation/rnabloom_transcript.fa.TD2.gff3',
+        bed = '../05.transcript_annotation/rnabloom_transcript.fa.TD2.bed',
     conda:
         "../envs/td2.yaml",
     log:
@@ -65,10 +65,16 @@ rule TD2Predict_Integrating_homology:
     threads:
         config["threads"]["TD2.LongOrfs"],
     params:
-        TD2_LongOrfs_dir = "../05.transcript_annotation/rnabloom.transcripts.length_filtered.dedup_E90_transcript.fa",
+        TD2_LongOrfs_dir = "../05.transcript_annotation/rnabloom.transcripts.length_filtered.dedup_E90_transcript",
+        TD2_convert_dir = "../05.transcript_annotation/rnabloom_transcript",
+        TD2_analysis_dir = "../05.transcript_annotation/",
+        TD2_transcript = './rnabloom_transcript',
     shell:
         """
-        TD2.Predict -t {params.TD2_LongOrfs_dir} \
-                    --retain-mmseqs-hits {input.mmseqs_result} &> {log}
+        cp -r {params.TD2_LongOrfs_dir} {params.TD2_convert_dir} &&
+        cp -r {params.TD2_LongOrfs_dir}.fa {params.TD2_convert_dir}.fa &&
+        cd {params.TD2_analysis_dir} &&
+        TD2.Predict -t {params.TD2_transcript}.fa \
+                    --retain-mmseqs-hits {input.mmseqs_result} -v &> {log}
         """
 # ----- rule ----- #

@@ -42,15 +42,18 @@ def rna_assembly(config:dict = None) -> list:
                                           sample=load_samples.keys()))
     # TD2.Predict CDS
     # hybrid_rna_assembly.append("../05.transcript_annotation/E90_transcript_transrate/")
-    hybrid_rna_assembly.append('../05.transcript_annotation/rnabloom.transcripts.length_filtered.dedup_E90_transcript.fa.TD2.pep')
-    hybrid_rna_assembly.append('../05.transcript_annotation/rnabloom.transcripts.length_filtered.dedup_E90_transcript.fa.TD2.cds')
-    hybrid_rna_assembly.append('../05.transcript_annotation/rnabloom.transcripts.length_filtered.dedup_E90_transcript.fa.TD2.gff3')
-    hybrid_rna_assembly.append('../05.transcript_annotation/rnabloom.transcripts.length_filtered.dedup_E90_transcript.fa.TD2.bed')
+    hybrid_rna_assembly.append('../05.transcript_annotation/rnabloom_transcript.fa.TD2.pep')
+    hybrid_rna_assembly.append('../05.transcript_annotation/rnabloom_transcript.fa.TD2.cds')
+    hybrid_rna_assembly.append('../05.transcript_annotation/rnabloom_transcript.fa.TD2.gff3')
+    hybrid_rna_assembly.append('../05.transcript_annotation/rnabloom_transcript.fa.TD2.bed')
     # Trinotate annotation
     # --- diamond swissprot annotation --- #
     hybrid_rna_assembly.append("../05.transcript_annotation/TD2_pep_matches_annotated.tsv")
     # --- PFAM --- #
     hybrid_rna_assembly.append('../05.transcript_annotation/TrinotatePFAM.out')
+    # interproscan annotation
+    hybrid_rna_assembly.append("../05.transcript_annotation/rnabloom_transcript.fa.TD2.pep.clean")
+    hybrid_rna_assembly.append("../05.transcript_annotation/TD2_pep_interproscan_annotation/")
     # Print Target rule           
     if config['print_target']:
         rich_print(hybrid_rna_assembly)

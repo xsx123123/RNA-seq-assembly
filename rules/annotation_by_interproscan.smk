@@ -3,9 +3,9 @@
 # ----- rule ----- #
 rule interproscan:
     input:
-        pep = '../05.transcript_annotation/rnabloom.transcripts.length_filtered.dedup_E90_transcript.fa.TD2.pep',
+        pep = '../05.transcript_annotation/rnabloom_transcript.fa.TD2.pep',
     output:
-        clean_pep = '../05.transcript_annotation/rnabloom.transcripts.length_filtered.dedup_E90_transcript.fa.clean.pep',
+        clean_pep = '../05.transcript_annotation/rnabloom_transcript.fa.TD2.pep.clean',
         ann = directory('../05.transcript_annotation/TD2_pep_interproscan_annotation/'),
     log:
         "../logs/transcript_annotation/interproscan.log",
@@ -26,7 +26,7 @@ rule interproscan:
 
 rule interproscan_format:
     input:
-        ann = '../05.transcript_annotation/TD2_pep_interproscan_annotation/rnabloom.transcripts.filtered.dedup_E90_transcript.fa.TD2.cleaned.pep.tsv',
+        ann = '../05.transcript_annotation/TD2_pep_interproscan_annotation/rnabloom_transcript.fa.TD2.pep.clean.tsv',
     output:
         summary = "../05.transcript_annotation/TD2_pep_interproscan_annotation/interproscan_ann.summary",
         go = "../05.transcript_annotation/TD2_pep_interproscan_annotation/interproscan_ann.gopathway",
