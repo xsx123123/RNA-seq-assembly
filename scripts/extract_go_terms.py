@@ -1,8 +1,11 @@
-import pandas as pd
-import argparse
-import logging
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 import re
 import sys
+import argparse
+import logging
+import pandas as pd
 
 def setup_logger():
     """配置日志记录器，用于在控制台输出脚本运行状态。"""
@@ -50,50 +53,64 @@ def main():
     }
     
     # 用于从字符串中匹配 "描述 [GO:ID]" 格式的正则表达式
-    # 例如: "diterpenoid biosynthetic process [GO:0016102]"
-    # (.*) 会捕获描述部分, (GO:\d+) 会捕获GO ID部分
     go_pattern = re.compile(r'(.*) \[(GO:\d+)\]')
     
     try:
         logger.info(f"正在读取输入文件: {args.input}")
-        # 使用pandas读取制表符分隔的文件
         df = pd.read_csv(args.input, sep='\t')
         logger.info(f"成功加载 {len(df)} 条记录。")
     except FileNotFoundError:
         logger.error(f"错误：输入文件未找到 -> {args.input}")
-        sys.exit(1) # 退出脚本
+        sys.exit(1)
     except Exception as e:
         logger.error(f"读取文件时发生错误: {e}")
         sys.exit(1)
 
-    # 创建一个空列表来存储所有提取出的GO信息
+    # 检查 'Entry Name' 列是否存在
+    if 'Entry Name' not in df.columns:
+        logger.error(f"错误: 输入文件中未找到 'Entry Name' 列。")
+        sys.exit(1)
+    if 'transcript_id' not in df.columns:
+        logger.error(f"错误: 输入文件中未找到 'transcript_id' 列。")
+        sys.exit(1)
+
     extracted_data = []
 
     logger.info("开始提取 GO 条目...")
     # 遍历DataFrame的每一行
     for index, row in df.iterrows():
-        gene_id = row['query_id']
+        gene_id = row['transcript_id']
         
+        # --- 修正点 (开始) ---
+        # 1. 从 row 中获取 'Entry Name' 的值
+        entry_name_val = row['Entry Name']
+        
+        # 2. 检查 'Entry Name' 是否为空 (NaN)
+        if pd.notna(entry_name_val):
+            # 如果不为空，拼接成 "gene_id"_"Entry_Name" 的形式
+            combined_id = f"{str(entry_name_val)}_{gene_id}"
+        else:
+            # 如果 'Entry Name' 为空，则只使用 gene_id 作为ID
+            combined_id = gene_id
+        # --- 修正点 (结束) ---
+            
         # 遍历三个GO列
         for col_name, go_type in go_columns.items():
-            # 检查单元格是否为空 (pd.notna 处理 NaN 等空值)
             if col_name in row and pd.notna(row[col_name]):
-                # 获取单元格内容并按分号切分，得到多个GO条目
                 entries = str(row[col_name]).split(';')
                 
                 for entry in entries:
-                    entry = entry.strip() # 去除首尾空格
+                    entry = entry.strip()
                     if not entry:
-                        continue # 跳过空条目
+                        continue
                     
-                    # 使用正则表达式进行匹配
                     match = go_pattern.match(entry)
                     if match:
-                        # 如果匹配成功，提取描述和GO ID
                         description, go_id = match.groups()
-                        # 将结果添加到列表中
+                        
+                        # --- 修正点：使用我们新创建的 combined_id ---
                         extracted_data.append([
-                            gene_id,
+                            combined_id,  # <-- 使用修正后的ID
                             go_type,
                             go_id,
                             description.strip()
@@ -111,7 +128,6 @@ def main():
     )
     
     try:
-        # 将结果保存到指定的输出文件，格式为TSV，不包含索引
         logger.info(f"正在将结果保存到: {args.output}")
         output_df.to_csv(args.output, sep='\t', index=False)
         logger.info("处理完成！")
