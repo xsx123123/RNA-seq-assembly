@@ -1,20 +1,12 @@
 # AUthor: jian zhang
 # *---utf-8---*
-# Date: 2025-8-20
+# Date: 2025-10-4
 # Analsis Software
 # ------- software path -------- #
-# When you are usring a conda/mamba analysis environment,
-# this software path parameter is not necessary
 software:
-  signalp: 
+  signalp: /home/jzhang/software/miniconda3/bin/signalp6
+  tmhmm : /home/jzhang/software/DTU_software/tmhmm-2.0c/bin/tmhmm
   interproscan:  /data/jzhang/reference/InterProScan/interproscan-5.75-106.0/interproscan.sh
-#  corset: /home/jzhang/software/corset-1.09-linux64/corset
-#  qc:
-#    fastqc: "/home/jzhang/software/FastQC/fastqc"
-#    multiqc: "/home/jzhang/.local/share/mamba/envs/qc/bin/multiqc"
-#    fastp: "/home/jzhang/software/fastp_1.0.1/fastp"
-#    nanoplot: '/home/jzhang/.local/share/mamba/envs/qc/bin/NanoPlot'
-#  transrate: '/home/jzhang/.local/share/mamba/envs/transrate/bin/transrate'
 # ------- software parameter -------- #
 # Raw data QC & Trimming
 trim:
@@ -44,9 +36,11 @@ threads:
   transrate: 35
   TD2.LongOrfs: 20
   mmseqs: 20
-  hmmscan: 20
+  hmmscan: 30
   interproscan: 20
+  diamond_blastp_threads: 10
   preprocess_interpro: 20
+  signalp: 8
 # ------- pipeline parameter -------- #
 log_level: "INFO"
 busco:
@@ -56,7 +50,6 @@ cdhit:
   coverage: 0.95
 salmon:
   librarytype: "A"
-
 abundance_estimates:
   est_method: salmon
 mmseqs:
@@ -67,3 +60,6 @@ annotate:
 deg:
   pval: 0.05
   lfc: 1
+signalp:
+  mode: slow-sequential
+# -------- END -------- #

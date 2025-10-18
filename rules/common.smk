@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+# loading packages
+from loguru import logger
+from pathlib import Path
+from typing import Dict, Union
 from rich import print as rich_print
-# Set the default target to run
+# Target rule function
 def rna_assembly(config:dict = None) -> list:
     """
     short-read & long-read RNA-seq assembly & annotation pipeline target
@@ -37,6 +42,8 @@ def rna_assembly(config:dict = None) -> list:
     hybrid_rna_assembly.append('../03.E90_filter/rnabloom.transcripts.length_filtered.dedup_E90_transcript.fa')
     # Fliter E90_transcript busco result
     hybrid_rna_assembly.append("../03.E90_filter/E90_transcript_busco/")
+    hybrid_rna_assembly.append("../03.E90_filter/remove_transcript.fa")
+    hybrid_rna_assembly.append("../03.E90_filter/remove_transcrip_busco/")
     # Evaluate ExN50 for E90_transcrip
     hybrid_rna_assembly.extend(expand("../04.E90_transcript_Evaluate/salmon_quant/{sample}/quant.sf",
                                           sample=load_samples.keys()))
@@ -46,6 +53,7 @@ def rna_assembly(config:dict = None) -> list:
     hybrid_rna_assembly.append('../05.transcript_annotation/rnabloom_transcript.fa.TD2.cds')
     hybrid_rna_assembly.append('../05.transcript_annotation/rnabloom_transcript.fa.TD2.gff3')
     hybrid_rna_assembly.append('../05.transcript_annotation/rnabloom_transcript.fa.TD2.bed')
+    hybrid_rna_assembly.append("../05.transcript_annotation/TD2_CDS_busco/")
     # Trinotate annotation
     # --- diamond swissprot annotation --- #
     hybrid_rna_assembly.append("../05.transcript_annotation/TD2_pep_matches_annotated.tsv")
@@ -53,8 +61,51 @@ def rna_assembly(config:dict = None) -> list:
     hybrid_rna_assembly.append('../05.transcript_annotation/TrinotatePFAM.out')
     # interproscan annotation
     hybrid_rna_assembly.append("../05.transcript_annotation/rnabloom_transcript.fa.TD2.pep.clean")
-    hybrid_rna_assembly.append("../05.transcript_annotation/TD2_pep_interproscan_annotation/")
+    hybrid_rna_assembly.append("../05.transcript_annotation/TD2_pep_interproscan_annotation/rnabloom_transcript.fa.TD2.pep.clean.tsv")
+    hybrid_rna_assembly.append("../05.transcript_annotation/TD2_pep_interproscan_annotation/interproscan_ann.summary")
+    hybrid_rna_assembly.append("../05.transcript_annotation/TD2_pep_interproscan_annotation/interproscan_ann.gopathway")
+    hybrid_rna_assembly.append("../05.transcript_annotation/TD2_pep_matches_annotated_go.tsv")
+    hybrid_rna_assembly.append('../05.transcript_annotation/TD2_pep_matches_annotated_go_description.tsv')
+    # Prediction Signal peptide by SignalP 6.0
+    # hybrid_rna_assembly.append('../05.transcript_annotation/TD2_pep_signalp')
     # Print Target rule           
     if config['print_target']:
         rich_print(hybrid_rna_assembly)
     return  hybrid_rna_assembly
+
+
+def _check_file_existence(path_str: str, name: str) -> None:
+    """
+    help function to check file existence
+    """
+    path = Path(path_str)
+    if not path.exists():
+        error_msg = f'Place check the {name} path: {path_str}'
+        logger.error(error_msg)
+        raise FileNotFoundError(error_msg)
+
+def judge_file_optimized(config: Dict = None) -> None:
+    """
+    judge if the file is exist for config yaml file
+    """
+    if config is None:
+        return
+
+    software_paths = [
+        (config["software"].get("tmhmm"), "tmhmm"),
+        (config["software"].get("signalp"), "signalp"),
+        (config["software"].get("interproscan"), "interproscan"),
+    ]
+
+    database_paths = [
+        (config["busco"].get("lineage"), "BUSCO lineage database"),
+        (config["mmseqs"].get("swissprot_database"), "swissprot database"),
+        (config["annotate"].get("uniport_database"), "uniport database"),
+        (config["annotate"].get("Pfam_A"), "Pfam A database"),
+    ]
+
+    all_paths = software_paths + database_paths
+
+    for path_str, name in all_paths:
+        if path_str:
+            _check_file_existence(path_str, name)

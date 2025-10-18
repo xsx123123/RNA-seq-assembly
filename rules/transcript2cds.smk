@@ -77,4 +77,27 @@ rule TD2Predict_Integrating_homology:
         TD2.Predict -t {params.TD2_transcript}.fa \
                     --retain-mmseqs-hits {input.mmseqs_result} -v &> {log}
         """
+
+rule TD2_busco:
+    input:
+        transcript = '../05.transcript_annotation/rnabloom_transcript.fa.TD2.cds',
+    output:
+        busco_dir = directory("../05.transcript_annotation/TD2_CDS_busco/"),
+    conda:
+        "../envs/busco.yaml",
+    log:
+        "../logs/transcript2cds/TD2_CDS_busco.log",
+    params:
+        lineage = config["busco"]["lineage"],
+        mode = config["busco"]["mode"],
+    threads:
+        config["threads"]["busco_salmon"],
+    shell:
+        """
+        busco -i {input.transcript} \
+              -o {output.busco_dir} \
+              --lineage_dataset {params.lineage} \
+              -m {params.mode} \
+              -c {threads} &> {log}
+        """
 # ----- rule ----- #

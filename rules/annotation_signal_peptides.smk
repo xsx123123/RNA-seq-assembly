@@ -3,21 +3,25 @@
 # ----- rule ----- #
 rule pep_signalp:
     input:
-        pep = '../05.transcript_annotation/rnabloom.transcripts.length_filtered.dedup_E90_transcript.fa.TD2.pep',
+        pep = '../05.transcript_annotation/rnabloom_transcript.fa.TD2.pep',
     output:
-        signalp_result = '../05.transcript_annotation/TD2_pep_signalp.out',
+        signalp_result = directory('../05.transcript_annotation/TD2_pep_signalp'),
     conda:
         "../envs/python3.yaml",
     log:
         "../logs/transcript_annotation/signalp.log",
     params:
         signalp = config['software']['signalp'],
-    threads: 1
+        run_mode = config['signalp']['mode'],
+    threads: config['threads']['signalp'],
     shell:
         """
-        {params.signalp} -f short \
-                        -n {output.signalp_result} \
-                        {input.input} &> {log}
+        {params.signalp} --fastafile {input.pep} \
+                         --organism other \
+                         --output_dir {output.signalp_result} \
+                         --format txt \
+                         --mode {params.run_mode} \
+                          &> {log}
         """
 
 rule pep_tmhmm:

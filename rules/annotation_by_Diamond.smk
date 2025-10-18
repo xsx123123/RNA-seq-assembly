@@ -11,15 +11,17 @@ rule Diamond_blast:
     log:
         "../logs/diamond/diamond_blastp.log",
     threads:
-        config["threads"]["TD2.LongOrfs"],
+        config["threads"]["diamond_blastp_threads"],
     params:
         swissprot = "/data/jzhang/reference/blast/swissprot/swissprot"
     shell:
         """
-        diamond blastp -d {params.swissprot} \
+        diamond blastp --threads {threads} \
+                       -d {params.swissprot} \
                        -q {input.pep} \
-                       -o {output.matches}  &> {log}
+                       -o {output.matches} 2> {log}
         """
+
 rule uniport_ann:
     input:
         matches = '../05.transcript_annotation/TD2_pep_matches.tsv',
@@ -33,8 +35,24 @@ rule uniport_ann:
         "../logs/transcript_annotation/annotate_blast_results.log",
     shell:
         """
-        python3 ../scripts/annotate_blast_results.py --blast_result {input.matches} \
+        python3 ./scripts/annotate_blast_results.py --blast_result {input.matches} \
                 --uniprot_map {params.annotate_blast_uniport} \
-                --output {output.annotated}  &> {log}
+                --output {output.annotated} 2> {log}
+        """
+
+rule uniport_go:
+    input:
+        matches_annotated = '../05.transcript_annotation/TD2_pep_matches_annotated.tsv',
+    output:
+        go_dataset = '../05.transcript_annotation/TD2_pep_matches_annotated_go.tsv',
+    conda:
+        "../envs/python3.yaml",
+    log:
+        "../logs/transcript_annotation/annotate_blast_results_go_dataset.log",
+    shell:
+        """
+        python3 ./scripts/extract_go_terms.py \
+                --input {input.matches_annotated} \
+                --output {output.go_dataset} 2> {log}
         """
 # ----- rule ----- #

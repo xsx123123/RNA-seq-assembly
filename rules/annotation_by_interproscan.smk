@@ -6,19 +6,21 @@ rule interproscan:
         pep = '../05.transcript_annotation/rnabloom_transcript.fa.TD2.pep',
     output:
         clean_pep = '../05.transcript_annotation/rnabloom_transcript.fa.TD2.pep.clean',
-        ann = directory('../05.transcript_annotation/TD2_pep_interproscan_annotation/'),
+        interproscan_result = '../05.transcript_annotation/TD2_pep_interproscan_annotation/rnabloom_transcript.fa.TD2.pep.clean.tsv',
     log:
         "../logs/transcript_annotation/interproscan.log",
     threads:
         config["threads"]["interproscan"],
     params:
-        interproscan = config['software']['interproscan']
+        interproscan = config['software']['interproscan'],
+        ann_dir = '../05.transcript_annotation/TD2_pep_interproscan_annotation/',
     shell:
-        """
-        sed sed 's/\*//g' {input.pep} > {output.clean_pep} &&
+        r"""
+        mkdir -p {params.ann_dir} &&
+        sed 's/\*//g' {input.pep} > {output.clean_pep} &&
         {params.interproscan} -i {output.clean_pep} \
                               -f tsv \
-                              -d {output.ann} \
+                              -d {params.ann_dir} \
                               -cpu {threads} \
                               --goterms \
                               &> {log}

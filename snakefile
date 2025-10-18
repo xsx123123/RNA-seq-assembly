@@ -24,9 +24,12 @@ include: 'rules/transcript2cds.smk'
 include: 'rules/annotation_by_Diamond.smk'
 include: 'rules/annotation_HMMER.smk'
 include: 'rules/annotation_by_interproscan.smk'
+include: 'rules/annotation_signal_peptides.smk'
 include: 'rules/RNA-seq-assembly-DEG.smk'
 # --------- target rule --------- #
 rule all:
     input:
         rna_assembly(config = config)
+# --------- judge dependencies --------- #
+judge_file_optimized(config = config)
 # --------- target rule --------- #

@@ -133,7 +133,25 @@ rule E90_Extert_core_transcripts:
                      {input.E90_transcript} > {output.transcript} 2> {log}
         """
 
-rule busco_assessment:
+rule E90_Exterted_transcripts:
+    input:
+        E90_transcript_ids = "../03.E90_filter/E90_transcript_ids.txt",
+        filtered = "../02.assembly/rnabloom_assembly/rnabloom.transcripts.length_filtered.dedup.fa",
+    output:
+        remove_transcript = "../03.E90_filter/remove_transcript.fa",
+    conda:
+        "../envs/seqtk.yaml",
+    log:
+        "../logs/salmon/remove_transcript.log",
+    threads: 1
+    shell:
+        """
+        awk 'NR==FNR {{ids[$1]=1; next}} \
+             /^>/ {{id=substr($1,2); if (id in ids) {{p=0}} else {{p=1}}}} p' \
+             {input.E90_transcript_ids} {input.filtered} > {output.remove_transcript} 2> {log}
+        """
+
+rule busco_assessment_for_E90:
     input:
         transcript = "../03.E90_filter/rnabloom.transcripts.length_filtered.dedup_E90_transcript.fa",
     output:
@@ -142,6 +160,29 @@ rule busco_assessment:
         "../envs/busco.yaml",
     log:
         "../logs/salmon/E90_transcript_busc.log",
+    params:
+        lineage = config["busco"]["lineage"],
+        mode = config["busco"]["mode"],
+    threads:
+        config["threads"]["busco_salmon"],
+    shell:
+        """
+        busco -i {input.transcript} \
+              -o {output.busco_dir} \
+              --lineage_dataset {params.lineage} \
+              -m {params.mode} \
+              -c {threads} &> {log}
+        """
+
+rule busco_assessment_for_remove:
+    input:
+        transcript = "../03.E90_filter/remove_transcript.fa",
+    output:
+        busco_dir = directory("../03.E90_filter/remove_transcrip_busco/"),
+    conda:
+        "../envs/busco.yaml",
+    log:
+        "../logs/salmon/remove_transcrip_busco.log",
     params:
         lineage = config["busco"]["lineage"],
         mode = config["busco"]["mode"],
