@@ -4,9 +4,9 @@ import os
 # ----- rule ----- #
 rule short_read_fastq_screen_r1:
     input:
-        r1 = os.path.join(config["raw_data_path"], "{sample}" + config['r1_suffix']),
+        md5_check = "../01.qc/md5_check.tsv",
     output:
-        fastq_screen_result = "../01.qc/fastq_screen_r1/{sample}.R1_screen.txt",
+        fastq_screen_result = "../01.qc/fastq_screen_r1/{sample}_R1_screen.txt",
     log:
         "../logs/01.short_read_qc_r1/{sample}.r1.fastq_screen.log",
     params:
@@ -15,8 +15,12 @@ rule short_read_fastq_screen_r1:
         conf = config['fastq_screen']['conf'],
         subset = config['fastq_screen']['subset'],
         aligner = config['fastq_screen']['aligner'],
+        r1 = os.path.join(config["raw_data_path"],
+                          config['convert_md5'],
+                          "{sample}",
+                          "{sample}" + config['r1_suffix']),
     message:
-        "Running fastq_screen on {input.r1}",
+        "Running fastq_screen on {wildcards.sample} r1",
     benchmark:
         "../benchmarks/{sample}_r1_fastq_screen_benchmark.txt",
     threads: 
@@ -29,14 +33,14 @@ rule short_read_fastq_screen_r1:
                      --aligner  {params.aligner} \
                      --conf {params.conf} \
                      --outdir {params.out_dir} \
-                     {input.r1} &> {log}
+                     {params.r1} &> {log}
         """
 
 rule short_read_fastq_screen_r2:
     input:
-        r2 = os.path.join(config["raw_data_path"], "{sample}" + config['r2_suffix']),
+        md5_check = "../01.qc/md5_check.tsv",
     output:
-        fastq_screen_result = "../01.qc/fastq_screen_r2/{sample}.R2_screen.txt",
+        fastq_screen_result = "../01.qc/fastq_screen_r2/{sample}_R2_screen.txt",
     log:
         "../logs/01.short_read_qc_r2/{sample}.r2.fastq_screen.log",
     params:
@@ -44,8 +48,12 @@ rule short_read_fastq_screen_r2:
         conf = config['fastq_screen']['conf'],
         subset = config['fastq_screen']['subset'],
         aligner = config['fastq_screen']['aligner'],
+        r2 = os.path.join(config["raw_data_path"],
+                          config['convert_md5'],
+                          "{sample}",
+                          "{sample}" + config['r2_suffix']),
     message:
-        "Running fastq_screen on {input.r2}",
+        "Running fastq_screen on {wildcards.sample} r2",
     benchmark:
         "../benchmarks/{sample}_r2_fastq_screen_benchmark.txt",
     threads: 
@@ -58,12 +66,12 @@ rule short_read_fastq_screen_r2:
                      --aligner  {params.aligner} \
                      --conf {params.conf} \
                      --outdir {params.out_dir} \
-                     {input.r2} &> {log}
+                     {params.r2} &> {log}
         """
 
 rule fastq_screen_multiqc_r1:
     input:
-        fastqc_files_r1 = expand("../01.qc/fastq_screen_r1/{sample}.R1_screen.txt", sample=load_samples.keys()),
+        fastqc_files_r1 = expand("../01.qc/fastq_screen_r1/{sample}_R1_screen.txt", sample=samples.keys()),
     output:
         report_dir = directory("../01.qc/fastq_screen_multiqc_r1/")
     conda:
@@ -88,7 +96,7 @@ rule fastq_screen_multiqc_r1:
 
 rule fastq_screen_multiqc_r2:
     input:
-        fastqc_files_r1 = expand("../01.qc/fastq_screen_r2/{sample}.R2_screen.txt", sample=load_samples.keys()),
+        fastqc_files_r1 = expand("../01.qc/fastq_screen_r2/{sample}_R2_screen.txt", sample=samples.keys()),
     output:
         report_dir = directory("../01.qc/fastq_screen_multiqc_r2/")
     conda:
