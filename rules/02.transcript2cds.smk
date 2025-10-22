@@ -12,6 +12,8 @@ rule transcript2cds:
         "../envs/td2.yaml",
     log:
         "../logs/transcript2cds/transcript2cds.log",
+    benchmark:
+        "../benchmarks/transcript2cds.txt",
     threads:
         config["threads"]["TD2.LongOrfs"],
     params:
@@ -35,6 +37,8 @@ rule pep_search_by_mmseqs:
         "../envs/mmseqs2.yaml",
     log:
         "../logs/pep_search_by_mmseq/pep_search_by_mmseq.log",
+    benchmark:
+        "../benchmarks/pep_search_by_mmseq.txt",
     params:
         mmseqs_database = config["mmseqs"]["swissprot_database"],
         temp_dir = "../05.transcript_annotation/tmp",
@@ -62,6 +66,8 @@ rule TD2Predict_Integrating_homology:
         "../envs/td2.yaml",
     log:
         "../logs/transcript2cds/transcript2cds.log",
+    benchmark:
+        "../benchmarks/transcript2cds.txt",
     threads:
         config["threads"]["TD2.LongOrfs"],
     params:
@@ -87,6 +93,8 @@ rule TD2_busco:
         "../envs/busco.yaml",
     log:
         "../logs/transcript2cds/TD2_CDS_busco.log",
+    benchmark:
+        "../benchmarks/TD2_CDS_busco.txt",
     params:
         lineage = config["busco"]["lineage"],
         mode = config["busco"]["mode"],

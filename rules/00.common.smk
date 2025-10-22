@@ -25,14 +25,23 @@ def rna_assembly(config:dict = None) -> list:
     hybrid_rna_assembly.extend(expand("../01.qc/short_read_trim/{sample}.fastp.json",
                                           sample=load_samples.keys()))
     hybrid_rna_assembly.append("../01.qc/multiqc_short_read_trim/")
+    if config['fastq_screen']['run']:
+        logger.info("fastq_screen analysis is enabled")
+        hybrid_rna_assembly.append("../01.qc/fastq_screen_multiqc_r1/")
+        hybrid_rna_assembly.append("../01.qc/fastq_screen_multiqc_r2/")
+    else:
+        logger.info("skipping fastq_screen analysis")
     # long-read qc & trim & clean result
     if config['long_read']:
+        logger.info("long-read qc & trim & clean is enabled")
         hybrid_rna_assembly.extend(expand("../01.qc/long_read_qc/{long_sample}/NanoPlot-report.html",
                                           long_sample=long_read_samples.keys()))
         hybrid_rna_assembly.extend(expand("../01.qc/long_read_trim/{long_sample}.fastplong.fq.gz",
                                           long_sample=long_read_samples.keys()))
         hybrid_rna_assembly.extend(expand("../01.qc/long_read_trim_qc/{long_sample}/NanoPlot-report.html",
                                           long_sample=long_read_samples.keys()))
+    else:
+        logger.info("skipping long-read qc & trim & clean analysis")
     # RNA-Assembly result
     # RNA-Assembly busco result
     hybrid_rna_assembly.append("../02.assembly/rnabloom_assembly/rnabloom.transcripts.length_filtered.dedup/") 
@@ -65,7 +74,6 @@ def rna_assembly(config:dict = None) -> list:
     hybrid_rna_assembly.append("../05.transcript_annotation/TD2_pep_interproscan_annotation/interproscan_ann.summary")
     hybrid_rna_assembly.append("../05.transcript_annotation/TD2_pep_interproscan_annotation/interproscan_ann.gopathway")
     hybrid_rna_assembly.append("../05.transcript_annotation/TD2_pep_matches_annotated_go.tsv")
-    hybrid_rna_assembly.append('../05.transcript_annotation/TD2_pep_matches_annotated_go_description.tsv')
     # Prediction Signal peptide by SignalP 6.0
     # hybrid_rna_assembly.append('../05.transcript_annotation/TD2_pep_signalp')
     # Print Target rule           

@@ -8,3 +8,5 @@ long_read_sample_csv: '/data/jzhang/project/RNA-seq-assembly_2025.8.25/workflow/
 # other parameter
 long_read: true
 print_target: true
+r1_suffix: .R1.fq.gz
+r2_suffix: .R2.fq.gz

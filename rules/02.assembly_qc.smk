@@ -11,6 +11,8 @@ rule transrate_assessment:
         "../envs/transrate.yaml",
     log:
         "../logs/transcript_annotation/E90_transcript_transrate.log",
+    benchmark:
+        "../benchmarks/E90_transcript_transrate.txt",
     params:
         short_r1 = ",".join(expand("../01.qc/short_read_trim/{sample}.R1.fastp.fq.gz", sample=load_samples.keys())),
         short_r2 = ",".join(expand("../01.qc/short_read_trim/{sample}.R2.fastp.fq.gz", sample=load_samples.keys())),

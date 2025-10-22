@@ -12,6 +12,8 @@ rule RNA_seq_assembly_DEG:
         "../envs/rna-seq_R.yaml",
     log:
         "../logs/DEG/DEG-analysis.log",
+    benchmark:
+        "../benchmarks/DEG-analysis.txt",
     params:
         pval = config['deg']['pval'],
         lfc = config['deg']['lfc'],

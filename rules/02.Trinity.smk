@@ -14,7 +14,9 @@ rule Trinity:
     conda:
         "../envs/trinity.yaml",
     log:
-        "../logs/trinity/{sample}.Trinity.log",
+        "../logs/trinity/Trinity_rna_assembly.log",
+    benchmark:
+        "../benchmarks/Trinity_rna_assembly.txt",
     params:
         min_kmer_cov = config["trinity"]["min_kmer_cov"],
         max_memory = config["trinity"]["max_memory"],

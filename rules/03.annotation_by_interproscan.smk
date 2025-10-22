@@ -9,6 +9,8 @@ rule interproscan:
         interproscan_result = '../05.transcript_annotation/TD2_pep_interproscan_annotation/rnabloom_transcript.fa.TD2.pep.clean.tsv',
     log:
         "../logs/transcript_annotation/interproscan.log",
+    benchmark:
+        "../benchmarks/interproscan.txt",
     threads:
         config["threads"]["interproscan"],
     params:
@@ -36,6 +38,8 @@ rule interproscan_format:
         "../envs/python3.yaml",
     log:
         "../logs/transcript_annotation/preprocess_interpro.log",
+    benchmark:
+        "../benchmarks/preprocess_interpro.txt",
     threads:
         config['threads']['preprocess_interpro'],
     shell:

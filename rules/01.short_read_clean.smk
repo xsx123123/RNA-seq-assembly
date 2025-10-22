@@ -15,6 +15,8 @@ rule short_read_fastp:
         "../envs/fastp.yaml",
     log:
         "../logs/short_read_trim/{sample}.fastp.log",
+    benchmark:
+        "../benchmarks/{sample}_fastp.txt",
     message:
         "Running Fastp on {input.r1} and {input.r2}",
     params:
@@ -51,6 +53,8 @@ rule multiqc_trim:
         title = "short_read_trim-multiqc-report",
     log:
         "../logs/trim/multiqc_trim.log",
+    benchmark:
+        "../benchmarks/multiqc_trim.txt",
     shell:
         """
         multiqc {params.fastqc_reports} \

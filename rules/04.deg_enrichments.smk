@@ -9,7 +9,9 @@ rule DEG_by_salmon:
     conda:
         "../envs/salmon.yaml",
     log:
-        "../logs/E90_transcript_Evaluate/salmon_index.log",
+        "../logs/DEG/DEG_by_salmon.log",
+    benchmark:
+        "../benchmarks/DEG_by_salmon.txt",
     threads:
         config["threads"]["salmon_index"],
     shell:

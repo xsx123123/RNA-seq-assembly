@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import pandas as pd
+from loguru import logger
 from rich import inspect,print
 # Load the samples CSV file into a DataFrame
 samples_df = pd.read_csv(config["sample_csv"])

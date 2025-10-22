@@ -18,11 +18,18 @@ long_read_qc:
   qualified_quality_phred: 15
 rnabloom:
   min_length: 150
+fastq_screen:
+  run: true
+  path: /home/jzhang/software/FastQ-Screen-0.16.0/fastq_screen
+  conf: /home/jzhang/software/FastQ-Screen-0.16.0/fastq_screen.conf
+  subset: 100000
+  aligner: Bowtie2
 # Resource parameter for a specific part of the analysis
 threads:
   fastp: 6
   nanoplot: 10
   fastplong: 10
+  fastq_screen: 10
   star_mapping : 16
   samtools_sort: 8
   rnabloom: 30

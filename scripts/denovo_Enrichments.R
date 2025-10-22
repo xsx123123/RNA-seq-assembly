@@ -139,6 +139,7 @@ GO_Enrichment <- function(go_dataset, degs) {
       dplyr::mutate(GeneRatio_numeric = (as.numeric(GR1) / as.numeric(GR2))) |>
       # BUG FIX: Use slice_max to get top 10 by the numeric GeneRatio
       dplyr::slice_max(order_by = GeneRatio_numeric, n = 10) |>
+      dplyr::top_n(n = 10) |>
       dplyr::mutate(ONTOLOGY = ontology_name)
     
     return(result_df)
@@ -195,6 +196,10 @@ GO_Enrichment <- function(go_dataset, degs) {
   bp_ego_result <- process_enrichment_result(bp_ego, "BP")
   mf_ego_result <- process_enrichment_result(mf_ego, "MF")
   cc_ego_result <- process_enrichment_result(cc_ego, "CC")
+  
+  bp_ego_result <- bp_ego_result |> dplyr::slice(1:10)
+  mf_ego_result <- mf_ego_result |> dplyr::slice(1:10)
+  cc_ego_result <- cc_ego_result |> dplyr::slice(1:10)
   
   # Bind all results together (NULLs will be automatically dropped)
   enrichment <- dplyr::bind_rows(bp_ego_result, mf_ego_result, cc_ego_result)

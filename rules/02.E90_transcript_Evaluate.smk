@@ -10,6 +10,8 @@ rule E90_salmon_index:
         "../envs/salmon.yaml",
     log:
         "../logs/E90_transcript_Evaluate/salmon_index.log",
+    benchmark:
+        "../benchmarks/E90_transcript_Evaluate_salmon_index.txt",
     threads:
         config["threads"]["salmon_index"],
     shell:
@@ -30,6 +32,8 @@ rule E90_salmon_mapping:
         "../envs/salmon.yaml",
     log:
         "../logs/E90_transcript_Evaluate/{sample}_salmon_quant.log",
+    benchmark:
+        "../benchmarks/E90_transcript_Evaluate_{sample}_salmon_quant.txt",
     threads:
         config["threads"]["salmon_quant"],
     params:
@@ -55,6 +59,8 @@ rule E90_abundance_estimates_to_matrix:
         "../envs/Trinity.yaml",
     log:
         "../logs/E90_transcript_Evaluate/abundance_estimates_to_matrix.log",
+    benchmark:
+        "../benchmarks/abundance_estimates_to_matrix.txt",
     params:
         transrate_salmon_prefix = '../04.E90_transcript_Evaluate/abundance_estimates_to_matrix/salmon_quant',
         method = config['abundance_estimates']['est_method'],
@@ -78,6 +84,8 @@ rule E90_ExN50_filtered_length_dedup:
         "../envs/Trinity.yaml",
     log:
         "../logs/ExN50/ExN50_filtered_length_dedup.log",
+    benchmark:
+        "../benchmarks/ExN50_filtered_length_dedup.txt",
     threads:1
     shell:
         """

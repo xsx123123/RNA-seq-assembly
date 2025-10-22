@@ -10,6 +10,8 @@ rule pep_signalp:
         "../envs/python3.yaml",
     log:
         "../logs/transcript_annotation/signalp.log",
+    benchmark:
+        "../benchmarks/signalp.txt",
     params:
         signalp = config['software']['signalp'],
         run_mode = config['signalp']['mode'],
@@ -33,6 +35,8 @@ rule pep_tmhmm:
         "../envs/python3.yaml",
     log:
         "../logs/transcript_annotation/tmhmm.log",
+    benchmark:
+        "../benchmarks/tmhmm.txt",
     threads: 1
     params:
         tmhmm = config['software']['tmhmm'],

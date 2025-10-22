@@ -10,6 +10,8 @@ rule E90_filtered_salmon_index:
         "../envs/salmon.yaml",
     log:
         "../logs/salmon/E90_filtered_salmon_index.log",
+    benchmark:
+        "../benchmarks/E90_filtered_salmon_index.txt",
     threads:
         config["threads"]["salmon_index"],
     shell:
@@ -30,6 +32,8 @@ rule salmon_mapping:
         "../envs/salmon.yaml",
     log:
         "../logs/salmon/{sample}_salmon_quant.log",
+    benchmark:
+        "../benchmarks/{sample}_salmon_quant.txt",
     threads:
         config["threads"]["salmon_quant"],
     params:
@@ -55,6 +59,8 @@ rule abundance_estimates_to_matrix:
         "../envs/Trinity.yaml",
     log:
         "../logs/abundance_estimates_to_matrix/abundance_estimates_to_matrix.log",
+    benchmark:
+        "../benchmarks/abundance_estimates_to_matrix.txt",
     params:
         transrate_salmon_prefix = '../03.E90_filter/abundance_estimates_to_matrix/salmon_quant',
         method = config['abundance_estimates']['est_method'],
@@ -78,6 +84,8 @@ rule ExN50_filtered_length_dedup:
         "../envs/Trinity.yaml",
     log:
         "../logs/ExN50/ExN50_filtered_length_dedup.log",
+    benchmark:
+        "../benchmarks/ExN50_filtered_length_dedup.txt",
     threads:1
     shell:
         """
@@ -94,6 +102,8 @@ rule E90_aggregate_quants:
         "../envs/python3.yaml",
     log:
         "../logs/salmon/aggregate_salmon_tpm.log"
+    benchmark:
+        "../benchmarks/aggregate_salmon_tpm.txt",
     shell:
         """
         python3 scripts/merge_salmon_quants.py {input.quants} \
@@ -109,6 +119,8 @@ rule E90_core_transcripts:
         "../envs/python3.yaml",
     log:
         "../logs/salmon/E90_filter.log",
+    benchmark:
+        "../benchmarks/E90_filter.txt",
     threads: 1
     shell:
         """
@@ -126,6 +138,8 @@ rule E90_Extert_core_transcripts:
         "../envs/seqtk.yaml",
     log:
         "../logs/salmon/seqtk_E90_filter.log",
+    benchmark:
+        "../benchmarks/seqtk_E90_filter.txt",
     threads: 1
     shell:
         """
@@ -143,6 +157,8 @@ rule E90_Exterted_transcripts:
         "../envs/seqtk.yaml",
     log:
         "../logs/salmon/remove_transcript.log",
+    benchmark:
+        "../benchmarks/remove_transcript.txt",
     threads: 1
     shell:
         """
@@ -160,6 +176,8 @@ rule busco_assessment_for_E90:
         "../envs/busco.yaml",
     log:
         "../logs/salmon/E90_transcript_busc.log",
+    benchmark:
+        "../benchmarks/E90_transcript_busc.txt",
     params:
         lineage = config["busco"]["lineage"],
         mode = config["busco"]["mode"],
@@ -183,6 +201,8 @@ rule busco_assessment_for_remove:
         "../envs/busco.yaml",
     log:
         "../logs/salmon/remove_transcrip_busco.log",
+    benchmark:
+        "../benchmarks/remove_transcrip_busco.txt",
     params:
         lineage = config["busco"]["lineage"],
         mode = config["busco"]["mode"],

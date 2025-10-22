@@ -10,6 +10,8 @@ rule hmmscan:
         "../envs/hmmscan.yaml",
     log:
         "../logs/hmmscan/hmmscan_pep.log",
+    benchmark:
+        "../benchmarks/hmmscan_pep.txt",
     params:
         Pfam_A = config['annotate']['Pfam_A'],
     threads:

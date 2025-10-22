@@ -10,6 +10,8 @@ rule Diamond_blast:
         "../envs/td2.yaml",
     log:
         "../logs/diamond/diamond_blastp.log",
+    benchmark:
+        "../benchmarks/diamond_blastp.txt",
     threads:
         config["threads"]["diamond_blastp_threads"],
     params:
@@ -33,6 +35,8 @@ rule uniport_ann:
         "../envs/python3.yaml",
     log:
         "../logs/transcript_annotation/annotate_blast_results.log",
+    benchmark:
+        "../benchmarks/annotate_blast_results.txt",
     shell:
         """
         python3 ./scripts/annotate_blast_results.py --blast_result {input.matches} \
@@ -49,6 +53,8 @@ rule uniport_go:
         "../envs/python3.yaml",
     log:
         "../logs/transcript_annotation/annotate_blast_results_go_dataset.log",
+    benchmark:
+        "../benchmarks/annotate_blast_results_go_dataset.txt",
     shell:
         """
         python3 ./scripts/extract_go_terms.py \

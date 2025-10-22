@@ -12,6 +12,8 @@ rule NanoPlot:
         "../envs/Nanoplot.yaml"
     log:
         "../logs/nanoplot/{long_sample}.nanoplot.log",
+    benchmark:
+        "../benchmarks/{long_sample}_NanoPlot-report.txt",
     params:
         report_dir = "../01.qc/long_read_qc/{long_sample}",
         # nanoplot = config["software"]["qc"]["nanoplot"],
@@ -42,6 +44,8 @@ rule fastplong_trim:
         "../envs/long-read-qc.yaml",
     log:
         "../logs/long_read_trim/{long_sample}.fastplong.log",
+    benchmark:
+        "../benchmarks/{long_sample}_fastplong.txt",
     params:
         quality_threshold = config["long_read_qc"]["qualified_quality_phred"],
         length_required = config["long_read_qc"]["length_required"],
@@ -68,6 +72,8 @@ rule NanoPlot_trim:
         "../envs/Nanoplot.yaml"
     log:
         "../logs/nanoplot/{long_sample}.trim.nanoplot.log",
+    benchmark:
+        "../benchmarks/{long_sample}_trim.nanoplot.txt",
     params:
         report_dir = "../01.qc/long_read_trim_qc/{long_sample}",
         title = "{long_sample}_trim_nanoplot",

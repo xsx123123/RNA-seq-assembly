@@ -2,32 +2,34 @@
 # -*- coding: utf-8 -*-
 import os
 # ----- rule ----- #
-#rule rnabloom_long:
-#    input:
-#        long_reads = expand("../01.qc/long_read_trim/{sample}.fastplong.fq.gz",
-#                            sample=long_read_samples.keys()),
-#        short_r1 = expand("../01.qc/short_read_trim/{sample}.R1.fastp.fq.gz",
-#                            sample=load_samples.keys()),
-#        short_r2 = expand("../01.qc/short_read_trim/{sample}.R2.fastp.fq.gz",
-#                            sample=load_samples.keys()),
-#    output:
-#        bloom = "../02.assembly/rnabloom_assembly/rnabloom.transcripts.fa",
-#    conda:
-#        "../envs/rnabloom.yaml",
-#    log:
-#        "../logs/rnabloom/rnabloom_long.log",
-#    params:
-#        outdir="../02.assembly/rnabloom_assembly",
-#    threads:
-#        config["threads"]["rnabloom"],
-#    shell:
-#        """
-#        rnabloom -long {input.long_reads} \
-#                 -t {threads} \
-#                 -outdir {params.outdir} \
-#                 -sef {input.short_r1} \
-#                 -sef {input.short_r2} &> {log}
-#        """
+rule rnabloom_long:
+    input:
+        long_reads = expand("../01.qc/long_read_trim/{sample}.fastplong.fq.gz",
+                            sample=long_read_samples.keys()),
+        short_r1 = expand("../01.qc/short_read_trim/{sample}.R1.fastp.fq.gz",
+                            sample=load_samples.keys()),
+        short_r2 = expand("../01.qc/short_read_trim/{sample}.R2.fastp.fq.gz",
+                            sample=load_samples.keys()),
+    output:
+        bloom = "../02.assembly/rnabloom_assembly/rnabloom.transcripts.fa",
+    conda:
+        "../envs/rnabloom.yaml",
+    log:
+        "../logs/rnabloom/rnabloom_long.log",
+    benchmark:
+        "../benchmarks/rnabloom_long.txt",
+    params:
+        outdir="../02.assembly/rnabloom_assembly",
+    threads:
+        config["threads"]["rnabloom"],
+    shell:
+        """
+        rnabloom -long {input.long_reads} \
+                 -t {threads} \
+                 -outdir {params.outdir} \
+                 -sef {input.short_r1} \
+                 -sef {input.short_r2} &> {log}
+        """
 
 rule transcripts_filter:
     input:
@@ -40,6 +42,8 @@ rule transcripts_filter:
         min_length = config["rnabloom"]["min_length"],
     log:
         "../logs/rnabloom/transcripts_filter.log",
+    benchmark:
+        "../benchmarks/transcripts_filter.txt",
     shell:
         """
         seqtk seq -L {params.min_length} -A {input.bloom} > {output.filtered} 2> {log}
@@ -54,6 +58,8 @@ rule transcripts_qc_busco:
         "../envs/busco.yaml",
     log:
         "../logs/rnabloom/transcripts_length_filtered_busco.log",
+    benchmark:
+        "../benchmarks/transcripts_length_filtered_busco.txt",
     params:
         lineage = config["busco"]["lineage"],
         mode = config["busco"]["mode"]
@@ -79,6 +85,8 @@ rule transcripts_cluster:
         coverage = config["cdhit"]["coverage"],
     log:
         "../logs/rnabloom/transcripts_dedup_cd-hit.log",
+    benchmark:
+        "../benchmarks/transcripts_dedup_cd-hit.txt",
     shell:
         """
         cd-hit-est -i {input.filtered} \
@@ -96,6 +104,8 @@ rule transcripts_cluter_qc_busco:
         "../envs/busco.yaml",
     log:
         "../logs/rnabloom/rnabloom.transcripts.length_filtered.dedup.log",
+    benchmark:
+        "../benchmarks/rnabloom.transcripts.length_filtered.dedup.txt",
     params:
         lineage = config["busco"]["lineage"],
         mode = config["busco"]["mode"],
