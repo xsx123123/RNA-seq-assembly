@@ -3,9 +3,9 @@
 # ----- rule ----- #
 rule interproscan:
     input:
-        pep = '../05.transcript_annotation/rnabloom_transcript.fa.TD2.pep',
+        pep = '../05.transcript_annotation/rnabloom_transcript_LongOrfs.fa.TD2.pep',
     output:
-        clean_pep = '../05.transcript_annotation/rnabloom_transcript.fa.TD2.pep.clean',
+        clean_pep = '../05.transcript_annotation/rnabloom_transcript_LongOrfs.fa.TD2.clean',
         interproscan_result = '../05.transcript_annotation/TD2_pep_interproscan_annotation/rnabloom_transcript.fa.TD2.pep.clean.tsv',
     log:
         "../logs/transcript_annotation/interproscan.log",

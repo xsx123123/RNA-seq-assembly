@@ -3,7 +3,7 @@
 # ----- rule ----- #
 rule pep_signalp:
     input:
-        pep = '../05.transcript_annotation/rnabloom_transcript.fa.TD2.pep',
+        pep = '../05.transcript_annotation/rnabloom_transcript_LongOrfs.fa.TD2.pep',
     output:
         signalp_result = directory('../05.transcript_annotation/TD2_pep_signalp'),
     conda:

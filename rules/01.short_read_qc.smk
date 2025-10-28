@@ -61,7 +61,7 @@ rule short_read_qc_r2:
 # logger.info('Run MultiQC to summarize R1 fastqc QC reports')
 rule short_read_multiqc_r1:
     input:
-        fastqc_files_r1 = expand("../01.qc/short_read_qc_r1/{sample}_R1_fastqc.zip", sample=samples.keys()),
+        fastqc_files_r1 = expand("../01.qc/short_read_qc_r1/{sample}_R1_fastqc.zip", sample=load_samples.keys()),
     output:
         report_dir = directory("../01.qc/short_read_r1_multiqc/")
     conda:
@@ -87,7 +87,7 @@ rule short_read_multiqc_r1:
 # logger.info('Run MultiQC to summarize R2 fastqc QC reports')
 rule short_read_multiqc_r2:
     input:
-        fastqc_files_r2 = expand("../01.qc/short_read_qc_r2/{sample}_R2_fastqc.zip", sample=samples.keys()),
+        fastqc_files_r2 = expand("../01.qc/short_read_qc_r2/{sample}_R2_fastqc.zip", sample=load_samples.keys()),
     output:
         report_dir = directory("../01.qc/short_read_r2_multiqc/")
     conda:

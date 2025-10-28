@@ -48,7 +48,7 @@ rule short_read_fastp:
 rule multiqc_trim:
     input:
         md5_check = "../01.qc/md5_check.tsv",
-        fastp_report = expand("../01.qc/short_read_trim/{sample}.fastp.html", sample=samples.keys()),
+        fastp_report = expand("../01.qc/short_read_trim/{sample}.fastp.html", sample=load_samples.keys()),
     output:
         report_dir = directory("../01.qc/multiqc_short_read_trim/")
     conda:

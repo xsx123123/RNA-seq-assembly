@@ -56,12 +56,14 @@ def rna_assembly(config:dict = None) -> list:
     # Evaluate ExN50 for E90_transcrip
     hybrid_rna_assembly.extend(expand("../04.E90_transcript_Evaluate/salmon_quant/{sample}/quant.sf",
                                           sample=load_samples.keys()))
+    hybrid_rna_assembly.append("../04.E90_transcript_Evaluate/abundance_estimates_to_matrix/salmon_quant.isoform.counts.matrix")
+    hybrid_rna_assembly.append("../04.E90_transcript_Evaluate/ExN50_filtered/ExN50.transcript.stats")
     # TD2.Predict CDS
     # hybrid_rna_assembly.append("../05.transcript_annotation/E90_transcript_transrate/")
-    hybrid_rna_assembly.append('../05.transcript_annotation/rnabloom_transcript.fa.TD2.pep')
-    hybrid_rna_assembly.append('../05.transcript_annotation/rnabloom_transcript.fa.TD2.cds')
-    hybrid_rna_assembly.append('../05.transcript_annotation/rnabloom_transcript.fa.TD2.gff3')
-    hybrid_rna_assembly.append('../05.transcript_annotation/rnabloom_transcript.fa.TD2.bed')
+    hybrid_rna_assembly.append('../05.transcript_annotation/rnabloom_transcript_LongOrfs.fa.TD2.pep')
+    hybrid_rna_assembly.append('../05.transcript_annotation/rnabloom_transcript_LongOrfs.fa.TD2.cds')
+    hybrid_rna_assembly.append('../05.transcript_annotation/rnabloom_transcript_LongOrfs.fa.TD2.gff3')
+    hybrid_rna_assembly.append('../05.transcript_annotation/rnabloom_transcript_LongOrfs.fa.TD2.bed')
     hybrid_rna_assembly.append("../05.transcript_annotation/TD2_CDS_busco/")
     # Trinotate annotation
     # --- diamond swissprot annotation --- #
@@ -69,7 +71,7 @@ def rna_assembly(config:dict = None) -> list:
     # --- PFAM --- #
     hybrid_rna_assembly.append('../05.transcript_annotation/TrinotatePFAM.out')
     # interproscan annotation
-    hybrid_rna_assembly.append("../05.transcript_annotation/rnabloom_transcript.fa.TD2.pep.clean")
+    hybrid_rna_assembly.append("../05.transcript_annotation/rnabloom_transcript_LongOrfs.fa.TD2.clean")
     hybrid_rna_assembly.append("../05.transcript_annotation/TD2_pep_interproscan_annotation/rnabloom_transcript.fa.TD2.pep.clean.tsv")
     hybrid_rna_assembly.append("../05.transcript_annotation/TD2_pep_interproscan_annotation/interproscan_ann.summary")
     hybrid_rna_assembly.append("../05.transcript_annotation/TD2_pep_interproscan_annotation/interproscan_ann.gopathway")

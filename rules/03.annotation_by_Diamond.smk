@@ -3,11 +3,11 @@
 # ----- rule ----- #
 rule Diamond_blast:
     input:
-        pep = '../05.transcript_annotation/rnabloom_transcript.fa.TD2.pep',
+        pep = '../05.transcript_annotation/rnabloom_transcript_LongOrfs.fa.TD2.pep',
     output:
         matches = '../05.transcript_annotation/TD2_pep_matches.tsv',
     conda:
-        "../envs/td2.yaml",
+        "../envs/blast.yaml",
     log:
         "../logs/diamond/diamond_blastp.log",
     benchmark:
@@ -15,13 +15,16 @@ rule Diamond_blast:
     threads:
         config["threads"]["diamond_blastp_threads"],
     params:
-        swissprot = "/data/jzhang/reference/blast/swissprot/swissprot"
+        diamond = config['software']['diamond'],
+        swissprot = "/data/jzhang/reference/blast/swissprot/swissprot",
     shell:
         """
-        diamond blastp --threads {threads} \
-                       -d {params.swissprot} \
-                       -q {input.pep} \
-                       -o {output.matches} 2> {log}
+        blastp -db {params.swissprot}  \
+               -query {input.pep}  \
+               -out {output.matches} \
+               -num_threads {threads} \
+               -outfmt 6 \
+               -evalue 1e-5 &> {log}
         """
 
 rule uniport_ann:

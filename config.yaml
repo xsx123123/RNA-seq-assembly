@@ -6,6 +6,7 @@ long_read_raw_data_path: '/data/jzhang/project/RNA-seq-assembly_2025.8.25/00.raw
 sample_csv: '/data/jzhang/project/RNA-seq-assembly_2025.8.25/workflow/sample.csv'
 long_read_sample_csv: '/data/jzhang/project/RNA-seq-assembly_2025.8.25/workflow/long-read-sample.csv'
 # other parameter
+convert_md5: link_dir
 long_read: true
 print_target: true
 r1_suffix: .R1.fq.gz

@@ -7,6 +7,7 @@ software:
   signalp: /home/jzhang/software/miniconda3/bin/signalp6
   tmhmm : /home/jzhang/software/DTU_software/tmhmm-2.0c/bin/tmhmm
   interproscan:  /data/jzhang/reference/InterProScan/interproscan-5.75-106.0/interproscan.sh
+  diamond: /home/jzhang/software/diamond-2.1.15/bin/diamond
 # ------- software parameter -------- #
 # Raw data QC & Trimming
 trim:
@@ -45,7 +46,7 @@ threads:
   mmseqs: 20
   hmmscan: 30
   interproscan: 20
-  diamond_blastp_threads: 10
+  diamond_blastp_threads: 30
   preprocess_interpro: 20
   signalp: 8
 # ------- pipeline parameter -------- #
