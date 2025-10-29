@@ -57,7 +57,7 @@ def main():
     
     try:
         logger.info(f"正在读取输入文件: {args.input}")
-        df = pd.read_csv(args.input, sep='\t')
+        df = pd.read_csv(args.input, sep='\t',low_memory = False)
         logger.info(f"成功加载 {len(df)} 条记录。")
     except FileNotFoundError:
         logger.error(f"错误：输入文件未找到 -> {args.input}")
@@ -70,8 +70,8 @@ def main():
     if 'Entry Name' not in df.columns:
         logger.error(f"错误: 输入文件中未找到 'Entry Name' 列。")
         sys.exit(1)
-    if 'transcript_id' not in df.columns:
-        logger.error(f"错误: 输入文件中未找到 'transcript_id' 列。")
+    if 'query_id' not in df.columns:
+        logger.error(f"错误: 输入文件中未找到 'query_id' 列。")
         sys.exit(1)
 
     extracted_data = []
@@ -79,7 +79,7 @@ def main():
     logger.info("开始提取 GO 条目...")
     # 遍历DataFrame的每一行
     for index, row in df.iterrows():
-        gene_id = row['transcript_id']
+        gene_id = row['query_id']
         
         # --- 修正点 (开始) ---
         # 1. 从 row 中获取 'Entry Name' 的值
