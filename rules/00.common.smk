@@ -72,9 +72,9 @@ def rna_assembly(config:dict = None) -> list:
     hybrid_rna_assembly.append('../05.transcript_annotation/TrinotatePFAM.out')
     # interproscan annotation
     hybrid_rna_assembly.append("../05.transcript_annotation/rnabloom_transcript_LongOrfs.fa.TD2.clean")
-    hybrid_rna_assembly.append("../05.transcript_annotation/TD2_pep_interproscan_annotation/rnabloom_transcript.fa.TD2.pep.clean.tsv")
-    hybrid_rna_assembly.append("../05.transcript_annotation/TD2_pep_interproscan_annotation/interproscan_ann.summary")
-    hybrid_rna_assembly.append("../05.transcript_annotation/TD2_pep_interproscan_annotation/interproscan_ann.gopathway")
+    hybrid_rna_assembly.append("../05.transcript_annotation/TD2_pep_interproscan_annotation/rnabloom_transcript_LongOrfs.fa.TD2.clean.tsv")
+    hybrid_rna_assembly.append("../05.transcript_annotation/TD2_pep_interproscan_annotation/rnabloom_transcript_LongOrfs_ann.summary")
+    hybrid_rna_assembly.append("../05.transcript_annotation/TD2_pep_interproscan_annotation/rnabloom_transcript_LongOrfs.gopathway")
     hybrid_rna_assembly.append("../05.transcript_annotation/TD2_pep_matches_annotated_go.tsv")
     # Prediction Signal peptide by SignalP 6.0
     # hybrid_rna_assembly.append('../05.transcript_annotation/TD2_pep_signalp')
