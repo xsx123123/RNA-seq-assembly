@@ -62,6 +62,6 @@ rule uniport_go:
         """
         python3 ./scripts/extract_go_terms.py \
                 --input {input.matches_annotated} \
-                --output {output.go_dataset} 2> {log}
+                --output {output.go_dataset} &> {log}
         """
 # ----- rule ----- #

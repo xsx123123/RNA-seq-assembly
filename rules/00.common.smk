@@ -43,16 +43,17 @@ def rna_assembly(config:dict = None) -> list:
     else:
         logger.info("skipping long-read qc & trim & clean analysis")
     # RNA-Assembly result
-    # RNA-Assembly busco result
-    hybrid_rna_assembly.append("../02.assembly/rnabloom_assembly/rnabloom.transcripts.length_filtered.dedup/") 
+    hybrid_rna_assembly.append("../02.assembly/rnabloom_assembly/length_filtered_busco/")
+    hybrid_rna_assembly.append("../02.assembly/rnabloom_assembly/length_filtered_cd-hit-est_busco/") 
+    # E90_filter
     hybrid_rna_assembly.extend(expand("../03.E90_filter/salmon_quant/{sample}/quant.sf",
                                         sample=load_samples.keys()))
     # Fliter E90_transcript
     hybrid_rna_assembly.append('../03.E90_filter/rnabloom.transcripts.length_filtered.dedup_E90_transcript.fa')
     # Fliter E90_transcript busco result
-    hybrid_rna_assembly.append("../03.E90_filter/E90_transcript_busco/")
+    hybrid_rna_assembly.append("../03.E90_filter/length_filtered_cd-hit-est_E90_transcript_busco/")
     hybrid_rna_assembly.append("../03.E90_filter/remove_transcript.fa")
-    hybrid_rna_assembly.append("../03.E90_filter/remove_transcrip_busco/")
+    hybrid_rna_assembly.append("../03.E90_filter/length_filtered_cd-hit-est_remove_transcrip_busco/")
     # Evaluate ExN50 for E90_transcrip
     hybrid_rna_assembly.extend(expand("../04.E90_transcript_Evaluate/salmon_quant/{sample}/quant.sf",
                                           sample=load_samples.keys()))
@@ -72,9 +73,9 @@ def rna_assembly(config:dict = None) -> list:
     hybrid_rna_assembly.append('../05.transcript_annotation/TrinotatePFAM.out')
     # interproscan annotation
     hybrid_rna_assembly.append("../05.transcript_annotation/rnabloom_transcript_LongOrfs.fa.TD2.clean")
-    hybrid_rna_assembly.append("../05.transcript_annotation/TD2_pep_interproscan_annotation/rnabloom_transcript.fa.TD2.pep.clean.tsv")
-    hybrid_rna_assembly.append("../05.transcript_annotation/TD2_pep_interproscan_annotation/interproscan_ann.summary")
-    hybrid_rna_assembly.append("../05.transcript_annotation/TD2_pep_interproscan_annotation/interproscan_ann.gopathway")
+    hybrid_rna_assembly.append("../05.transcript_annotation/TD2_pep_interproscan_annotation/rnabloom_transcript_LongOrfs.fa.TD2.clean.tsv")
+    hybrid_rna_assembly.append("../05.transcript_annotation/TD2_pep_interproscan_annotation/rnabloom_transcript_LongOrfs_ann.summary")
+    hybrid_rna_assembly.append("../05.transcript_annotation/TD2_pep_interproscan_annotation/rnabloom_transcript_LongOrfs.gopathway")
     hybrid_rna_assembly.append("../05.transcript_annotation/TD2_pep_matches_annotated_go.tsv")
     # Prediction Signal peptide by SignalP 6.0
     # hybrid_rna_assembly.append('../05.transcript_annotation/TD2_pep_signalp')

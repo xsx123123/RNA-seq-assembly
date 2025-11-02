@@ -6,7 +6,7 @@ rule interproscan:
         pep = '../05.transcript_annotation/rnabloom_transcript_LongOrfs.fa.TD2.pep',
     output:
         clean_pep = '../05.transcript_annotation/rnabloom_transcript_LongOrfs.fa.TD2.clean',
-        interproscan_result = '../05.transcript_annotation/TD2_pep_interproscan_annotation/rnabloom_transcript.fa.TD2.pep.clean.tsv',
+        interproscan_result = '../05.transcript_annotation/TD2_pep_interproscan_annotation/rnabloom_transcript_LongOrfs.fa.TD2.clean.tsv',
     log:
         "../logs/transcript_annotation/interproscan.log",
     benchmark:
@@ -30,10 +30,10 @@ rule interproscan:
 
 rule interproscan_format:
     input:
-        ann = '../05.transcript_annotation/TD2_pep_interproscan_annotation/rnabloom_transcript.fa.TD2.pep.clean.tsv',
+        ann = '../05.transcript_annotation/TD2_pep_interproscan_annotation/rnabloom_transcript_LongOrfs.fa.TD2.clean.tsv',
     output:
-        summary = "../05.transcript_annotation/TD2_pep_interproscan_annotation/interproscan_ann.summary",
-        go = "../05.transcript_annotation/TD2_pep_interproscan_annotation/interproscan_ann.gopathway",
+        summary = "../05.transcript_annotation/TD2_pep_interproscan_annotation/rnabloom_transcript_LongOrfs_ann.summary",
+        go = "../05.transcript_annotation/TD2_pep_interproscan_annotation/rnabloom_transcript_LongOrfs.gopathway",
     conda:
         "../envs/python3.yaml",
     log:
