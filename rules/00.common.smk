@@ -34,12 +34,16 @@ def rna_assembly(config:dict = None) -> list:
     # long-read qc & trim & clean result
     if config['long_read']:
         logger.info("long-read qc & trim & clean is enabled")
-        hybrid_rna_assembly.extend(expand("../01.qc/long_read_qc/{long_sample}/NanoPlot-report.html",
+        
+        hybrid_rna_assembly.extend(expand("../01.qc/long_read_qc/{long_sample}/{long_sample}_NanoPlot-report.html",
                                           long_sample=long_read_samples.keys()))
         hybrid_rna_assembly.extend(expand("../01.qc/long_read_trim/{long_sample}.fastplong.fq.gz",
                                           long_sample=long_read_samples.keys()))
-        hybrid_rna_assembly.extend(expand("../01.qc/long_read_trim_qc/{long_sample}/NanoPlot-report.html",
+        hybrid_rna_assembly.extend(expand("../01.qc/long_read_trim_qc/{long_sample}/{long_sample}_trim_NanoPlot-report.html",
                                           long_sample=long_read_samples.keys()))
+
+        hybrid_rna_assembly.append("../01.qc/long_read_qc/multiqc/multiqc_NanoPlot_raw_data_report.html")
+        hybrid_rna_assembly.append("../01.qc/long_read_trim_qc/multiqc/multiqc_NanoPlot_trim_data_report.html")
     else:
         logger.info("skipping long-read qc & trim & clean analysis")
     # RNA-Assembly result
@@ -54,6 +58,7 @@ def rna_assembly(config:dict = None) -> list:
     hybrid_rna_assembly.append("../03.E90_filter/length_filtered_cd-hit-est_E90_transcript_busco/")
     hybrid_rna_assembly.append("../03.E90_filter/remove_transcript.fa")
     hybrid_rna_assembly.append("../03.E90_filter/length_filtered_cd-hit-est_remove_transcrip_busco/")
+    hybrid_rna_assembly.append("../03.E90_filter/transcript_stats.tsv")
     # Evaluate ExN50 for E90_transcrip
     hybrid_rna_assembly.extend(expand("../04.E90_transcript_Evaluate/salmon_quant/{sample}/quant.sf",
                                           sample=load_samples.keys()))

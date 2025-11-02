@@ -1,0 +1,7 @@
+name: seqkit
+channels:
+  - bioconda
+dependencies:
+  - seqkit=2.10.1=he881be0_0
+
+prefix: "/home/jzhang/.local/share/mamba/envs/seqkit"
