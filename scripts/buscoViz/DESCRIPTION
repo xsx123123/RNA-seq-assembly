@@ -1,0 +1,31 @@
+Package: buscoViz
+Type: Package
+Title: Visualize BUSCO Summary Across Pipeline Stages
+Version: 0.1.0
+Authors@R: 
+    person(given = "Your", family = "Name", email = "you@example.com", 
+           role = c("aut","cre"))
+Description: Read multiple BUSCO JSON summaries, merge them, and plot alluvial charts to compare BUSCO categories across processing stages.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Depends: R (>= 4.1)
+Imports:
+    jsonlite,
+    dplyr,
+    tidyr,
+    stringr,
+    tibble,
+    ggplot2,
+    ggalluvial,
+    ggpubr,
+    purrr,
+    fs,
+    cli
+Suggests:
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown
+Config/testthat/edition: 3

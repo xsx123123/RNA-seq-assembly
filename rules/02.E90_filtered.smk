@@ -171,7 +171,7 @@ rule busco_assessment_for_E90:
     input:
         transcript = "../03.E90_filter/rnabloom.transcripts.length_filtered.dedup_E90_transcript.fa",
     output:
-        busco_dir = directory("../03.E90_filter/E90_transcript_busco/"),
+        busco_dir = directory("../03.E90_filter/length_filtered_cd-hit-est_E90_transcript_busco/"),
     conda:
         "../envs/busco.yaml",
     log:
@@ -196,7 +196,7 @@ rule busco_assessment_for_remove:
     input:
         transcript = "../03.E90_filter/remove_transcript.fa",
     output:
-        busco_dir = directory("../03.E90_filter/remove_transcrip_busco/"),
+        busco_dir = directory("../03.E90_filter/length_filtered_cd-hit-est_remove_transcrip_busco/"),
     conda:
         "../envs/busco.yaml",
     log:

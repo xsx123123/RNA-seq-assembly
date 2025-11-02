@@ -53,7 +53,7 @@ rule transcripts_qc_busco:
     input:
         filtered = "../02.assembly/rnabloom_assembly/rnabloom.transcripts.length_filtered.fa",
     output:
-        busco_dir = directory("../02.assembly/rnabloom_assembly/busco/"),
+        busco_dir = directory("../02.assembly/rnabloom_assembly/length_filtered_busco/"),
     conda:
         "../envs/busco.yaml",
     log:
@@ -99,7 +99,7 @@ rule transcripts_cluter_qc_busco:
     input:
         filtered = "../02.assembly/rnabloom_assembly/rnabloom.transcripts.length_filtered.dedup.fa",
     output:
-        busco_dir = directory("../02.assembly/rnabloom_assembly/rnabloom.transcripts.length_filtered.dedup/"),
+        busco_dir = directory("../02.assembly/rnabloom_assembly/length_filtered_cd-hit-est_busco/"),
     conda:
         "../envs/busco.yaml",
     log:
