@@ -1,13 +1,17 @@
 project_name: 'RNA-seq-assembly'
-# short & long read raw-data
+# short read raw-data
 raw_data_path: '/data/jzhang/project/RNA-seq-assembly_2025.8.25/00.raw_data/short-read/raw'
-long_read_raw_data_path: '/data/jzhang/project/RNA-seq-assembly_2025.8.25/00.raw_data/long-read/raw'
-# short & long read samples info
 sample_csv: '/data/jzhang/project/RNA-seq-assembly_2025.8.25/workflow/sample.csv'
-long_read_sample_csv: '/data/jzhang/project/RNA-seq-assembly_2025.8.25/workflow/long-read-sample.csv'
-# other parameter
-convert_md5: link_dir
+short_read_convert_md5 : short_read_link_dir
+short_read_md5: raw.md5.txt
+# long read raw-data
 long_read: true
-print_target: true
-r1_suffix: .R1.fq.gz
-r2_suffix: .R2.fq.gz
+long_read_raw_data_path: '/data/jzhang/project/RNA-seq-assembly_2025.8.25/00.raw_data/long-read/raw'
+long_read_sample_csv: '/data/jzhang/project/RNA-seq-assembly_2025.8.25/workflow/long-read-sample.csv'
+long_read_convert_md5 : long_read_link_dir
+long_read_md5: MD5.txt
+# short & long read samples info
+
+
+
+

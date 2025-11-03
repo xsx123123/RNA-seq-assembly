@@ -5,7 +5,10 @@ import os
 # logger.info('Running NanoPlot for quality control on long-read sequencing data')
 rule NanoPlot:
     input:
-        fastq = os.path.join(config["long_read_raw_data_path"],"{long_sample}.fq.gz"),
+        md5_check = '../01.qc/md5_check_short_read.tsv',
+        fastq = os.path.join('../00.raw_data',
+                              config['short_read_convert_md5'],
+                              "{long_sample}/{long_sample}.fq.gz"),
     output:
         report_html = "../01.qc/long_read_qc/{long_sample}/{long_sample}_NanoPlot-report.html",
     conda:
@@ -36,7 +39,10 @@ rule NanoPlot:
 # logger.info('Running fastplong for quality control on long-read sequencing data')
 rule fastplong_trim:
     input:
-        fastq = os.path.join(config["long_read_raw_data_path"], "{long_sample}.fq.gz"),
+        md5_check = '../01.qc/md5_check_short_read.tsv',
+        fastq = os.path.join('../00.raw_data',
+                              config['short_read_convert_md5'],
+                              "{long_sample}/{long_sample}.fq.gz"),
     output:
         r1_trimmed = "../01.qc/long_read_trim/{long_sample}.fastplong.fq.gz",
         html_report = "../01.qc/long_read_trim/{long_sample}.fastplong.html",

@@ -24,7 +24,8 @@ def rna_assembly(config:dict = None) -> list:
                                           sample=load_samples.keys()))
     hybrid_rna_assembly.extend(expand("../01.qc/short_read_trim/{sample}.fastp.json",
                                           sample=load_samples.keys()))
-    hybrid_rna_assembly.append("../01.qc/md5_check.tsv")
+    hybrid_rna_assembly.append("../01.qc/md5_check_short_read.tsv")
+    hybrid_rna_assembly.append('../01.qc/md5_check_long_read.tsv')
     hybrid_rna_assembly.append("../01.qc/multiqc_short_read_trim/")
     if config['fastq_screen']['run']:
         logger.info("fastq_screen analysis is enabled")
@@ -126,3 +127,32 @@ def judge_file_optimized(config: Dict = None) -> None:
     for path_str, name in all_paths:
         if path_str:
             _check_file_existence(path_str, name)
+
+def get_sample_data_dir(sample_id:str = None,
+                        config:dict = None) -> str:
+    """
+    根据 *具体的* sample_id (e.g., "Sample_A"),
+    查找 *包含* fastq 文件的 *目录*。
+    
+    注意：我修改了它，使其不再依赖 wildcards，
+    而是直接接收 sample_id 字符串。
+    """
+    
+    for base_dir in config["raw_data_path"]:
+        sample_dir = os.path.join(base_dir, sample_id)
+        if os.path.isdir(sample_dir):
+            return sample_dir
+                
+    raise FileNotFoundError(f"无法在 {config['raw_data_path']} 中找到 {sample_id} ({sample_path_component}) 的数据目录")
+
+def get_all_input_dirs(sample_keys:str = None,
+                       config:dict = config) -> list:
+    """
+    遍历所有样本 ID，调用 get_sample_data_dir，
+    返回一个包含所有数据目录的列表。
+    """
+    dir_list = []
+    for sample_id in sample_keys:
+        dir_list.append(get_sample_data_dir(sample_id,config = config))
+    print(dir_list)
+    return list(set(dir_list))
