@@ -13,6 +13,8 @@ configfile: "config.yaml"
 include: 'rules/00.common.smk'
 include: 'rules/00.log.smk'
 include: 'rules/00.id_convert.smk'
+include: 'rules/00.get_all_input_dirs.smk'
+include: 'rules/01.file_convert_md5.smk'
 include: 'rules/01.short_read_qc.smk'
 include: 'rules/01.Contamination_check.smk'
 include: 'rules/01.short_read_clean.smk'

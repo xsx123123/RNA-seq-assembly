@@ -27,6 +27,7 @@ fastq_screen:
   aligner: Bowtie2
 # Resource parameter for a specific part of the analysis
 threads:
+  short_md5_check: 20
   fastp: 6
   nanoplot: 10
   fastplong: 10
@@ -70,4 +71,7 @@ deg:
   lfc: 1
 signalp:
   mode: slow-sequential
+r1_suffix: .R1.fq.gz
+r2_suffix: .R2.fq.gz
+print_target: true
 # -------- END -------- #

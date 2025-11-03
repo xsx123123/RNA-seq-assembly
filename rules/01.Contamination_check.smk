@@ -4,7 +4,7 @@ import os
 # ----- rule ----- #
 rule short_read_fastq_screen_r1:
     input:
-        md5_check = "../01.qc/md5_check.tsv",
+        md5_check = "../01.qc/md5_check_short_read.tsv",
     output:
         fastq_screen_result = "../01.qc/fastq_screen_r1/{sample}_R1_screen.txt",
     log:
@@ -15,10 +15,9 @@ rule short_read_fastq_screen_r1:
         conf = config['fastq_screen']['conf'],
         subset = config['fastq_screen']['subset'],
         aligner = config['fastq_screen']['aligner'],
-        r1 = os.path.join(config["raw_data_path"],
-                          config['convert_md5'],
-                          "{sample}",
-                          "{sample}" + config['r1_suffix']),
+        r1 = os.path.join('../00.raw_data',
+                           config['short_read_convert_md5'],
+                           "{sample}/{sample}_R1.fq.gz"),
     message:
         "Running fastq_screen on {wildcards.sample} r1",
     benchmark:
@@ -38,7 +37,7 @@ rule short_read_fastq_screen_r1:
 
 rule short_read_fastq_screen_r2:
     input:
-        md5_check = "../01.qc/md5_check.tsv",
+        md5_check = "../01.qc/md5_check_short_read.tsv",
     output:
         fastq_screen_result = "../01.qc/fastq_screen_r2/{sample}_R2_screen.txt",
     log:
@@ -48,10 +47,9 @@ rule short_read_fastq_screen_r2:
         conf = config['fastq_screen']['conf'],
         subset = config['fastq_screen']['subset'],
         aligner = config['fastq_screen']['aligner'],
-        r2 = os.path.join(config["raw_data_path"],
-                          config['convert_md5'],
-                          "{sample}",
-                          "{sample}" + config['r2_suffix']),
+        r2 = os.path.join('../00.raw_data',
+                           config['short_read_convert_md5'],
+                           "{sample}/{sample}_R1.fq.gz"),
     message:
         "Running fastq_screen on {wildcards.sample} r2",
     benchmark:

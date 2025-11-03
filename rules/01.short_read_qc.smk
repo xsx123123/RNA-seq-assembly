@@ -4,7 +4,7 @@ import os
 # ----- rule ----- #
 rule short_read_qc_r1:
     input:
-        md5_check = "../01.qc/md5_check.tsv",
+        md5_check = "../01.qc/md5_check_short_read.tsv",
     output:
         r1_html = "../01.qc/short_read_qc_r1/{sample}_R1_fastqc.html",
         r1_zip = "../01.qc/short_read_qc_r1/{sample}_R1_fastqc.zip",
@@ -14,10 +14,9 @@ rule short_read_qc_r1:
         r1 = "../logs/01.short_read_qc_r1/{sample}.r1.fastqc.log",
     params:
         out_dir = "../01.qc/short_read_qc_r1/",
-        r1 = os.path.join(config["raw_data_path"],
-                          config['convert_md5'],
-                          "{sample}",
-                          "{sample}" + config['r1_suffix']),
+        r1 = os.path.join('../00.raw_data',
+                           config['short_read_convert_md5'],
+                           "{sample}/{sample}_R1.fq.gz"),
     message:
         "Running FastQC on {wildcards.sample} r1",
     benchmark:
@@ -32,7 +31,7 @@ rule short_read_qc_r1:
 
 rule short_read_qc_r2:
     input:
-        md5_check = "../01.qc/md5_check.tsv",
+        md5_check = "../01.qc/md5_check_short_read.tsv",
     output:
         r2_html = "../01.qc/short_read_qc_r2/{sample}_R2_fastqc.html",
         r2_zip = "../01.qc/short_read_qc_r2/{sample}_R2_fastqc.zip",
@@ -42,10 +41,9 @@ rule short_read_qc_r2:
         r2 = "../logs/01.short_read_qc_r2/{sample}.r2.fastqc.log",
     params:
         out_dir = "../01.qc/short_read_qc_r2",
-        r2 = os.path.join(config["raw_data_path"],
-                          config['convert_md5'],
-                          "{sample}",
-                          "{sample}" + config['r2_suffix']),
+        r2 = os.path.join('../00.raw_data',
+                           config['short_read_convert_md5'],
+                           "{sample}/{sample}_R2.fq.gz"),
     message:
         "Running FastQC on {wildcards.sample} r2",
     benchmark:

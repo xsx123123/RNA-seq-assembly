@@ -4,7 +4,7 @@ import os
 # ----- rule ----- #
 rule short_read_fastp:
     input:
-        md5_check = "../01.qc/md5_check.tsv",
+        md5_check = "../01.qc/md5_check_short_read.tsv",
     output:
         r1_trimmed = "../01.qc/short_read_trim/{sample}.R1.fastp.fq.gz",
         r2_trimmed = "../01.qc/short_read_trim/{sample}.R2.fastp.fq.gz",
@@ -22,14 +22,12 @@ rule short_read_fastp:
         length_required = config["trim"]["length_required"],
         quality_threshold = config["trim"]["quality_threshold"],
         adapter_fasta = config["trim"]["adapter_fasta"],
-        r1 = os.path.join(config["raw_data_path"],
-                          config['convert_md5'],
-                          "{sample}",
-                          "{sample}" + config['r1_suffix']),
-        r2 = os.path.join(config["raw_data_path"],
-                          config['convert_md5'],
-                          "{sample}",
-                          "{sample}" + config['r2_suffix']),
+        r1 = os.path.join('../00.raw_data',
+                           config['short_read_convert_md5'],
+                           "{sample}/{sample}_R1.fq.gz"),
+        r2 = os.path.join('../00.raw_data',
+                           config['short_read_convert_md5'],
+                           "{sample}/{sample}_R2.fq.gz"),
     threads: 
         config["threads"]["fastp"],
     shell:
@@ -47,7 +45,7 @@ rule short_read_fastp:
 
 rule multiqc_trim:
     input:
-        md5_check = "../01.qc/md5_check.tsv",
+        md5_check = "../01.qc/md5_check_short_read.tsv",
         fastp_report = expand("../01.qc/short_read_trim/{sample}.fastp.html", sample=load_samples.keys()),
     output:
         report_dir = directory("../01.qc/multiqc_short_read_trim/")
