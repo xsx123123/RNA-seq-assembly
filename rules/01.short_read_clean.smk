@@ -67,6 +67,7 @@ rule multiqc_trim:
         """
         multiqc {params.fastqc_reports} \
                 --outdir {output.report_dir} \
+                --export --template simple \
                 -i {params.title} \
                 -n {params.report} &> {log}
         """

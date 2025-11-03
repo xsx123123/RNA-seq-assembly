@@ -24,6 +24,7 @@ def rna_assembly(config:dict = None) -> list:
                                           sample=load_samples.keys()))
     hybrid_rna_assembly.extend(expand("../01.qc/short_read_trim/{sample}.fastp.json",
                                           sample=load_samples.keys()))
+    hybrid_rna_assembly.append("../01.qc/md5_check.tsv")
     hybrid_rna_assembly.append("../01.qc/multiqc_short_read_trim/")
     if config['fastq_screen']['run']:
         logger.info("fastq_screen analysis is enabled")
