@@ -1,10 +1,6 @@
 use anyhow::{Context, Result};
-<<<<<<< HEAD
-use clap::Parser;
-=======
 // --- 新增：用于 CLI 参数枚举 ---
 use clap::{Parser, ValueEnum};
->>>>>>> dev_1.0v
 use regex::Regex;
 // --- 引入用于 JSON 序列化 ---
 use serde::Serialize;
@@ -20,13 +16,6 @@ use walkdir::WalkDir;
 use std::os::unix::fs::symlink;
 
 
-<<<<<<< HEAD
-/// 用于解析文件名的结构体，包含样本名和R1/R2信息
-#[derive(Debug)]
-struct SampleFileInfo {
-    sample_name: String,
-    read_pair: String,
-=======
 /// (PE) 用于解析双端文件名的结构体
 #[derive(Debug)]
 struct SampleFileInfo {
@@ -39,24 +28,10 @@ struct SampleFileInfo {
 #[derive(Debug)]
 struct SingleEndFileInfo {
     sample_name: String,
->>>>>>> dev_1.0v
     original_path: PathBuf,
 }
 
 /// 用于生成 JSON 报告的结构体
-<<<<<<< HEAD
-#[derive(Serialize, Debug)]
-struct RenamingReportEntry {
-    sample_name: String,
-    // 使用相对于输出目录的路径
-    new_r1_path_relative: String,
-    new_r2_path_relative: String,
-    // 使用绝对路径以方便溯源
-    original_r1_path_absolute: String,
-    original_r2_path_absolute: String,
-    md5_r1: Option<String>,
-    md5_r2: Option<String>,
-=======
 // --- 修改：使报告结构更灵活，以同时支持 PE 和 SE ---
 #[derive(Serialize, Debug)]
 struct RenamingReportEntry {
@@ -95,7 +70,6 @@ enum LibraryType {
     LongRead,
     /// 自动检测并处理两种类型 (默认)
     Auto,
->>>>>>> dev_1.0v
 }
 
 
@@ -103,11 +77,7 @@ enum LibraryType {
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 #[command(name = "seq_preprocessor")]
-<<<<<<< HEAD
-#[command(about = "自动整理不同来源的测序数据，统一命名和目录结构。")]
-=======
 #[command(about = "自动整理不同来源的测序数据（支持Short-read和Long-read），统一命名和目录结构。")]
->>>>>>> dev_1.0v
 struct Cli {
     /// 原始数据所在的根目录路径 (可指定一个或多个)
     #[arg(short, long, num_args = 1..)] // 允许 1 个或多个参数
@@ -133,14 +103,11 @@ struct Cli {
     /// 生成一个 JSON 格式的重命名报告文件。
     #[arg(long)]
     json_report: Option<PathBuf>,
-<<<<<<< HEAD
-=======
 
     // --- 新增：指定文库类型参数 ---
     /// 指定要处理的文库类型
     #[arg(long, value_enum, default_value_t = LibraryType::Auto)]
     library_type: LibraryType,
->>>>>>> dev_1.0v
 }
 
 fn main() -> Result<()> {
@@ -150,15 +117,6 @@ fn main() -> Result<()> {
     fs::create_dir_all(&cli.output).context(format!("无法创建输出目录: {}", cli.output.display()))?;
 
     // 1. 收集所有 FASTQ 和 MD5 文件信息
-<<<<<<< HEAD
-    let mut fastq_files: Vec<SampleFileInfo> = Vec::new();
-    let mut md5_files: Vec<PathBuf> = Vec::new();
-    let mut unmatched_fastq_files: Vec<PathBuf> = Vec::new();
-
-    // --- 使用两个独立的、更简单的正则表达式，提高鲁棒性 ---
-    let re_illumina = Regex::new(r"^(.*?)_S\d+_L\d+_([Rr][12])_\d+\.f(ast)?q\.gz$").unwrap();
-    let re_generic = Regex::new(r"^(.*)[\._]([Rr][12]|[12])\.f(ast)?q\.gz$").unwrap();
-=======
     // --- 修改：区分 PE 和 SE 文件列表 ---
     let mut pe_fastq_files: Vec<SampleFileInfo> = Vec::new();
     let mut se_fastq_files: Vec<SingleEndFileInfo> = Vec::new();
@@ -171,7 +129,6 @@ fn main() -> Result<()> {
     // --- 新增：(SE) 用于匹配 Long-read 的正则表达式 ---
     let re_long_read = Regex::new(r"^(.*?)(\.f(ast)?q\.gz)$").unwrap();
 
->>>>>>> dev_1.0v
 
     // --- 遍历所有传入的 input 路径 ---
     for input_path in &cli.input {
@@ -192,35 +149,6 @@ fn main() -> Result<()> {
                 };
 
                 let mut matched = false;
-<<<<<<< HEAD
-                // --- 使用 if / else if 结构，按顺序尝试匹配 ---
-                if let Some(caps) = re_illumina.captures(file_name) {
-                    if let (Some(sample), Some(pair_cap)) = (caps.get(1), caps.get(2)) {
-                        let read_pair = if pair_cap.as_str().to_lowercase() == "r1" { "R1" } else { "R2" }.to_string();
-                        fastq_files.push(SampleFileInfo {
-                            sample_name: sample.as_str().to_string(),
-                            read_pair,
-                            original_path: path.to_path_buf(),
-                        });
-                        matched = true;
-                    }
-                } else if let Some(caps) = re_generic.captures(file_name) {
-                    if let (Some(sample), Some(pair_cap)) = (caps.get(1), caps.get(2)) {
-                        let read_pair = match pair_cap.as_str().to_lowercase().as_str() {
-                            "r1" | "1" => "R1".to_string(),
-                            "r2" | "2" => "R2".to_string(),
-                            _ => unreachable!(),
-                        };
-                        fastq_files.push(SampleFileInfo {
-                            sample_name: sample.as_str().to_string(),
-                            read_pair,
-                            original_path: path.to_path_buf(),
-                        });
-                        matched = true;
-                    }
-                }
-                
-=======
 
                 // --- 修改：分层匹配逻辑，基于 library_type ---
 
@@ -275,7 +203,6 @@ fn main() -> Result<()> {
                 }
                 
                 // 4. 处理未匹配或 MD5
->>>>>>> dev_1.0v
                 if !matched {
                     if file_name.ends_with(".fq.gz") || file_name.ends_with(".fastq.gz") {
                         unmatched_fastq_files.push(path.to_path_buf());
@@ -288,20 +215,6 @@ fn main() -> Result<()> {
     } // --- 遍历 input 路径的循环结束 ---
 
 
-<<<<<<< HEAD
-    if !unmatched_fastq_files.is_empty() {
-        let mut error_message =
-            "错误：发现以下 FASTQ 文件命名不符合预期的两种模式，请检查或修正文件名:\n".to_string();
-        for path in unmatched_fastq_files {
-            error_message.push_str(&format!("  - {}\n", path.display()));
-        }
-        error_message.push_str("\n预期的模式为: \n  1. <样本名>_<Read号>.fq.gz (例如: B11_1.fq.gz)\n  2. <样本名>.<Read号>.fq.gz (例如: CK_L_10_R1.R1.fq.gz)\n  3. Illumina 格式 (例如: Sample_S1_L001_R1_001.fastq.gz)\n");
-        anyhow::bail!(error_message);
-    }
-
-    println!("- 扫描完成: 找到 {} 个符合规范的 FASTQ 文件, {} 个 MD5 文件。", fastq_files.len(), md5_files.len());
-    
-=======
     // --- 修改：错误信息根据所选模式动态生成 ---
     if !unmatched_fastq_files.is_empty() {
         let mut error_message =
@@ -329,7 +242,6 @@ fn main() -> Result<()> {
     );
     
     // 2. 解析所有 MD5 文件
->>>>>>> dev_1.0v
     let mut checksum_map: HashMap<String, String> = HashMap::new();
     println!("- 开始解析 MD5 文件...");
     for md5_file_path in &md5_files {
@@ -339,38 +251,25 @@ fn main() -> Result<()> {
             let parts: Vec<&str> = line.split_whitespace().collect();
             if parts.len() < 2 { continue; }
             let checksum = parts[0].to_string();
-<<<<<<< HEAD
-=======
             // 修复：确保从 MD5.txt 中提取的是纯文件名
->>>>>>> dev_1.0v
             let original_filename = PathBuf::from(parts[1])
                 .file_name()
                 .unwrap_or_default()
                 .to_string_lossy()
                 .to_string();
-<<<<<<< HEAD
-            checksum_map.insert(original_filename, checksum);
-=======
             if !original_filename.is_empty() {
                 checksum_map.insert(original_filename, checksum);
             }
->>>>>>> dev_1.0v
         }
     }
     println!("- MD5 解析完成，共加载 {} 条记录。", checksum_map.len());
 
 
-<<<<<<< HEAD
-    let mut samples: HashMap<String, (Option<PathBuf>, Option<PathBuf>)> = HashMap::new();
-    for file_info in fastq_files {
-        let entry = samples.entry(file_info.sample_name.clone()).or_default();
-=======
     // 3. 组织 PE (Short-Read) 样本
     // --- 修改：重命名 `samples` -> `pe_samples` ---
     let mut pe_samples: HashMap<String, (Option<PathBuf>, Option<PathBuf>)> = HashMap::new();
     for file_info in pe_fastq_files {
         let entry = pe_samples.entry(file_info.sample_name.clone()).or_default();
->>>>>>> dev_1.0v
         if file_info.read_pair == "R1" {
             entry.0 = Some(file_info.original_path);
         } else if file_info.read_pair == "R2" {
@@ -378,15 +277,6 @@ fn main() -> Result<()> {
         }
     }
 
-<<<<<<< HEAD
-    println!("- 已将文件整理为 {} 个独立样本。", samples.len());
-    
-    let mut summary_md5_lines: Vec<String> = Vec::new();
-    let mut json_report_entries: Vec<RenamingReportEntry> = Vec::new();
-
-    for (sample_name, (r1_opt, r2_opt)) in samples {
-        println!("  - 正在处理样本: {}", sample_name);
-=======
     // --- 修改：更新日志 ---
     println!("- 已将 PE 文件整理为 {} 个独立样本。", pe_samples.len());
     println!("- 已找到 {} 个 SE 样本。", se_fastq_files.len());
@@ -464,7 +354,6 @@ fn main() -> Result<()> {
     // --- 修改：循环 `pe_samples` ---
     for (sample_name, (r1_opt, r2_opt)) in pe_samples {
         println!("  - 正在处理 PE 样本: {}", sample_name);
->>>>>>> dev_1.0v
 
         let (original_r1, original_r2) = match (r1_opt, r2_opt) {
             (Some(r1), Some(r2)) => (r1, r2),
@@ -483,78 +372,6 @@ fn main() -> Result<()> {
         let new_r1_path = sample_output_dir.join(&new_r1_name);
         let new_r2_path = sample_output_dir.join(&new_r2_name);
 
-<<<<<<< HEAD
-        // --- 【文件处理逻辑】: 检查、验证和处理链接/文件 ---
-
-        #[cfg(unix)]
-        {
-            // --- 帮助函数：处理 R1 或 R2 文件 ---
-            fn process_link(
-                new_path: &PathBuf, 
-                original_path: &PathBuf, 
-                read_name: &str,
-                sample_name: &str,
-            ) -> Result<()> {
-                if new_path.exists() {
-                    // 修复 E0425 错误的关键修改
-                    match read_link(new_path) { 
-                        Ok(target) => {
-                            if target == *original_path {
-                                println!("    - 文件 {} (R{}) 已存在且指向正确，跳过。", new_path.file_name().unwrap_or_default().to_string_lossy(), read_name);
-                                return Ok(());
-                            } else {
-                                println!("    - 文件 {} (R{}) 存在但指向错误 (当前: {}，应为: {}), 正在删除并重建...",
-                                    new_path.file_name().unwrap_or_default().to_string_lossy(),
-                                    read_name,
-                                    target.display(),
-                                    original_path.display()
-                                );
-                                fs::remove_file(new_path).context(format!("无法删除旧文件/链接: {}", new_path.display()))?;
-                            }
-                        },
-                        Err(_) => {
-                            // 不是软链接，或者读取失败（例如是普通文件），先删除
-                            println!("    - 文件 {} (R{}) 存在但不是有效软链接，正在删除并重建...", 
-                                new_path.file_name().unwrap_or_default().to_string_lossy(),
-                                read_name,
-                            );
-                            fs::remove_file(new_path).context(format!("无法删除旧文件: {}", new_path.display()))?;
-                        }
-                    }
-                }
-                
-                // 创建新的软链接
-                symlink(original_path, new_path)
-                    .context(format!("无法为样本 {} 创建软链接 {}: {}", sample_name, read_name, new_path.display()))?;
-                println!("    - 成功创建软链接 {}: {}", read_name, new_path.file_name().unwrap_or_default().to_string_lossy());
-                Ok(())
-            }
-
-            process_link(&new_r1_path, &original_r1, "1", &sample_name)?;
-            process_link(&new_r2_path, &original_r2, "2", &sample_name)?;
-        }
-        #[cfg(not(unix))]
-        {
-             // 非 Unix 系统（例如 Windows）默认行为是复制。
-             // 检查文件是否存在，如果存在则跳过复制。
-             if new_r1_path.exists() {
-                 println!("    - 文件 {} (R1) 已存在（非Unix，可能是复制），跳过复制。", new_r1_path.file_name().unwrap_or_default().to_string_lossy());
-             } else {
-                 fs::copy(&original_r1, &new_r1_path)
-                    .context(format!("无法复制文件: {}", new_r1_path.display()))?;
-                 println!("    - 成功复制文件 {}: {}", "R1", new_r1_path.file_name().unwrap_or_default().to_string_lossy());
-             }
-
-             if new_r2_path.exists() {
-                 println!("    - 文件 {} (R2) 已存在（非Unix，可能是复制），跳过复制。", new_r2_path.file_name().unwrap_or_default().to_string_lossy());
-             } else {
-                 fs::copy(&original_r2, &new_r2_path)
-                    .context(format!("无法复制文件: {}", new_r2_path.display()))?;
-                 println!("    - 成功复制文件 {}: {}", "R2", new_r2_path.file_name().unwrap_or_default().to_string_lossy());
-             }
-        }
-        
-=======
         // --- 修改：使用辅助函数处理文件 ---
         #[cfg(unix)]
         {
@@ -566,7 +383,6 @@ fn main() -> Result<()> {
             process_file_copy(&new_r1_path, &original_r1, "R1", &sample_name)?;
             process_file_copy(&new_r2_path, &original_r2, "R2", &sample_name)?;
         }
->>>>>>> dev_1.0v
         // --- 文件处理逻辑结束 ---
 
 
@@ -594,26 +410,6 @@ fn main() -> Result<()> {
         if let Some(c) = &checksum_r1 { summary_md5_lines.push(format!("{}  {}", c, relative_r1_path.display())); }
         if let Some(c) = &checksum_r2 { summary_md5_lines.push(format!("{}  {}", c, relative_r2_path.display())); }
         
-<<<<<<< HEAD
-        // --- 填充 JSON 报告条目 ---
-        if cli.json_report.is_some() {
-            json_report_entries.push(RenamingReportEntry {
-                sample_name: sample_name.clone(),
-                new_r1_path_relative: relative_r1_path.to_string_lossy().to_string(),
-                original_r1_path_absolute: fs::canonicalize(&original_r1)?.to_string_lossy().to_string(),
-                new_r2_path_relative: relative_r2_path.to_string_lossy().to_string(),
-                original_r2_path_absolute: fs::canonicalize(&original_r2)?.to_string_lossy().to_string(),
-                md5_r1: checksum_r1,
-                md5_r2: checksum_r2,
-            });
-        }
-    }
-    
-    if let Some(summary_md5_filename) = &cli.summary_md5 {
-        let summary_path = cli.output.join(summary_md5_filename);
-        if !summary_md5_lines.is_empty() {
-            summary_md5_lines.sort();
-=======
         // --- 修改：填充 JSON 报告条目 (PE) ---
         if cli.json_report.is_some() {
             json_report_entries.push(RenamingReportEntry {
@@ -708,7 +504,6 @@ fn main() -> Result<()> {
         let summary_path = cli.output.join(summary_md5_filename);
         if !summary_md5_lines.is_empty() {
             summary_md5_lines.sort(); // 确保 MD5 文件顺序一致
->>>>>>> dev_1.0v
             let final_content = summary_md5_lines.join("\n") + "\n";
             fs::write(&summary_path, final_content)
                 .context(format!("无法写入总纲 MD5 文件: {}", summary_path.display()))?;

@@ -8,24 +8,12 @@ use std::fs::{self, File};
 use std::io::{self, BufReader, Read};
 use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicBool, Ordering};
-<<<<<<< HEAD
-=======
 // --- 新增：为 enable_steady_tick 引入 Duration ---
 use std::time::Duration;
->>>>>>> dev_1.0v
 
 // --- 数据结构 ---
 
 /// 用于从 JSON 文件中反序列化数据的结构体
-<<<<<<< HEAD
-#[derive(Deserialize, Debug)]
-struct RenamingReportEntry {
-    sample_name: String,
-    new_r1_path_relative: String,
-    new_r2_path_relative: String,
-    md5_r1: Option<String>,
-    md5_r2: Option<String>,
-=======
 // --- 修改：适配新的 JSON 报告格式 (PE + SE) ---
 #[derive(Deserialize, Debug)]
 struct RenamingReportEntry {
@@ -43,7 +31,6 @@ struct RenamingReportEntry {
     // SE Fields (必须是 Option，因为 PE 样本没有这些字段)
     new_se_path_relative: Option<String>,
     md5_se: Option<String>,
->>>>>>> dev_1.0v
 }
 
 /// 用于在程序内部处理的验证任务
@@ -194,21 +181,6 @@ fn main() -> Result<()> {
         .context("解析 JSON 文件失败，请检查文件格式是否正确。")?;
 
     let mut tasks = Vec::new();
-<<<<<<< HEAD
-    for entry in report_entries {
-        if let Some(md5_r1) = entry.md5_r1 {
-            tasks.push(VerificationTask {
-                file_to_check: cli.base_dir.join(entry.new_r1_path_relative),
-                expected_md5: md5_r1,
-                sample_name: entry.sample_name.clone(),
-            });
-        }
-        if let Some(md5_r2) = entry.md5_r2 {
-            tasks.push(VerificationTask {
-                file_to_check: cli.base_dir.join(entry.new_r2_path_relative),
-                expected_md5: md5_r2,
-                sample_name: entry.sample_name,
-=======
     
     // --- 修改：更新任务收集逻辑以支持 PE 和 SE ---
     info!("正在从报告中收集验证任务...");
@@ -238,7 +210,6 @@ fn main() -> Result<()> {
                 file_to_check: cli.base_dir.join(path_se),
                 expected_md5: md5_se.clone(),
                 sample_name: entry.sample_name.clone(),
->>>>>>> dev_1.0v
             });
         }
     }
@@ -260,13 +231,10 @@ fn main() -> Result<()> {
         .template("{spinner:.green} [{elapsed_precise}] [{bar:40.cyan/blue}] {pos}/{len} ({percent}%) | {per_sec} | ETA: {eta}")?
         .progress_chars("##-"));
 
-<<<<<<< HEAD
-=======
     // --- 修改：启用稳定计时器以确保旋转动画持续 ---
     // 这将强制进度条大约每 100ms 重绘一次，从而使 {spinner} 动画保持活动
     pb.enable_steady_tick(Duration::from_millis(100));
 
->>>>>>> dev_1.0v
     let has_failures = AtomicBool::new(false);
     
     let results: Vec<VerificationResult> = tasks
@@ -302,4 +270,3 @@ fn main() -> Result<()> {
 
     Ok(())
 }
-

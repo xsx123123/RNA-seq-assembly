@@ -93,6 +93,28 @@ rule ExN50_filtered_length_dedup:
                                   {input.transcript} transcript | tee {output.ExN50_result} &> {log}
         """
 
+rule ExN50_filtered_length_dedup_visablity:
+    input:
+        ExN50_result = "../03.E90_filter/ExN50_filtered/ExN50.transcript.stats",
+    output:
+        ExN50_plot = '../03.E90_filter/ExN50_filtered/ExN50_transcript.pdf',
+        ExN50_plot_png = '../03.E90_filter/ExN50_filtered/ExN50_transcript.png',
+    conda:
+        "../envs/python3.yaml",
+    log:
+        "../logs/ExN50/ExN50_transcript_stats_plot.log",
+    benchmark:
+        "../benchmarks/ExN50_transcript_stats_plot.txt",
+    params:
+        output_prefix = '../03.E90_filter/ExN50_filtered/ExN50_transcript',
+    threads:1
+    shell:
+        """
+        python3 ./scripts/ExN50.py -i {input.ExN50_result} \
+                         -o {params.output_prefix} \
+                         -F png pdf &> {log}
+        """
+
 rule E90_aggregate_quants:
     input:
         quants = expand("../03.E90_filter/salmon_quant/{sample}/quant.sf", sample=load_samples.keys()),

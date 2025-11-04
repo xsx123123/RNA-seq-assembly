@@ -57,15 +57,20 @@ def rna_assembly(config:dict = None) -> list:
     # Fliter E90_transcript
     hybrid_rna_assembly.append('../03.E90_filter/rnabloom.transcripts.length_filtered.dedup_E90_transcript.fa')
     # Fliter E90_transcript busco result
+
+    ExN50_plot_png = '../03.E90_filter/ExN50_filtered/ExN50_transcript.png',
     hybrid_rna_assembly.append("../03.E90_filter/length_filtered_cd-hit-est_E90_transcript_busco/")
     hybrid_rna_assembly.append("../03.E90_filter/remove_transcript.fa")
     hybrid_rna_assembly.append("../03.E90_filter/length_filtered_cd-hit-est_remove_transcrip_busco/")
     hybrid_rna_assembly.append("../03.E90_filter/transcript_stats.tsv")
+    hybrid_rna_assembly.append('../03.E90_filter/ExN50_filtered/ExN50_transcript.png')
     # Evaluate ExN50 for E90_transcrip
     hybrid_rna_assembly.extend(expand("../04.E90_transcript_Evaluate/salmon_quant/{sample}/quant.sf",
                                           sample=load_samples.keys()))
     hybrid_rna_assembly.append("../04.E90_transcript_Evaluate/abundance_estimates_to_matrix/salmon_quant.isoform.counts.matrix")
     hybrid_rna_assembly.append("../04.E90_transcript_Evaluate/ExN50_filtered/ExN50.transcript.stats")
+    hybrid_rna_assembly.append('../04.E90_transcript_Evaluate/ExN50_filtered/ExN50_transcript.pdf')
+    hybrid_rna_assembly.append('../04.E90_transcript_Evaluate/ExN50_filtered/ExN50_transcript.png')
     # TD2.Predict CDS
     # hybrid_rna_assembly.append("../05.transcript_annotation/E90_transcript_transrate/")
     hybrid_rna_assembly.append('../05.transcript_annotation/rnabloom_transcript_LongOrfs.fa.TD2.pep')
