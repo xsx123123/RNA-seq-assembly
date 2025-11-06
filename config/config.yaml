@@ -36,6 +36,9 @@ threads:
   star_mapping : 16
   samtools_sort: 8
   rnabloom: 30
+  bowtie2_build: 20
+  bowtie_mapping: 20
+  samtools_threads: 4
   busco: 16
   bowtie_mapping: 10
   samtools_mapping: 5

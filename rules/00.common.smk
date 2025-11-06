@@ -71,6 +71,8 @@ def rna_assembly(config:dict = None) -> list:
     hybrid_rna_assembly.append("../04.E90_transcript_Evaluate/ExN50_filtered/ExN50.transcript.stats")
     hybrid_rna_assembly.append('../04.E90_transcript_Evaluate/ExN50_filtered/ExN50_transcript.pdf')
     hybrid_rna_assembly.append('../04.E90_transcript_Evaluate/ExN50_filtered/ExN50_transcript.png')
+    hybrid_rna_assembly.extend(expand('../02.mapping/bwa_mem2/sort_index/{sample}.sort.bam',sample=load_samples.keys()))
+    hybrid_rna_assembly.extend(expand('../02.mapping/bwa_mem2/sort_index/{sample}.sort.bam.bai',sample=load_samples.keys()))
     # TD2.Predict CDS
     # hybrid_rna_assembly.append("../05.transcript_annotation/E90_transcript_transrate/")
     hybrid_rna_assembly.append('../05.transcript_annotation/rnabloom_transcript_LongOrfs.fa.TD2.pep')
